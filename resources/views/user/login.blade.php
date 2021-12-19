@@ -5,7 +5,7 @@
         <div class="row justify-content-start">
             <div class="col-4"></div>
             <div class="col-4">
-                <h2 style="text-align: center;">Sign In Page</h2>
+                <h2 style="text-align: center;">User Login</h2>
                 <hr />
                 <form action="{{route('submitLoginInfo')}}" method="POST">
                     @csrf
@@ -26,7 +26,7 @@
                     </div>
                 </form>
                 <div class="mb-3 text-center">
-                    <a href="#" class="link-primary">New User? Click here to Register.</a>
+                    <a href="{{route('showRegisterPage')}}" class="link-primary">New User? Click here to Register.</a>
                 </div>
             </div>
         </div>

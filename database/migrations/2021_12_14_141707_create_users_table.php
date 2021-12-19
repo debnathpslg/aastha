@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('user_email')->unique();
             $table->string('user_mobile')->unique();
             $table->string('password');
-            $table->integer('user_role')->unsigned()->default(0);
+            $table->bigInteger('user_role')->unsigned()->default(0);
             $table->boolean('is_active')->default(false);
-            $table->integer('location_id')->unsigned()->default(2);
+            $table->bigInteger('location_id')->unsigned()->default(2);
             $table->dateTime('last_login')->nullable();
-            $table->integer('is_logged_in')->default(false);
-            $table->string('emp_id')->unique();
+            $table->boolean('is_logged_in')->default(false);
+            $table->string('emp_id')->nullable();
             $table->timestamps();
         });
     }

@@ -22,3 +22,5 @@ Route::get('/', [DashboardController::class, 'home'])->name('homePage');
 Route::get('/login', [UserController::class, 'showLoginPage'])->name('loginPage');
 Route::post('/login', [UserController::class, 'submitLoginInfo'])->name('submitLoginInfo');
 Route::get('/logout', [UserController::class, 'logoutUser'])->name('logoutUser');
+Route::get('/signup', [UserController::class, 'showRegisterPage'])->name('showRegisterPage');
+Route::post('/signup', [UserController::class, 'submitRegInfo'])->name('submitRegInfo');

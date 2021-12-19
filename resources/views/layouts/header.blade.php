@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <a class="navbar-brand" href="{{route('homePage')}}">
-            <img class="brand-logo-light" src="{{asset('logo.ico')}}" alt="" width="140" height="37">
+            <img class="brand-logo-light" src="{{asset('storage/aastha.png')}}" alt="" width="140" height="37">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,16 +52,19 @@
                     @php ($curUser = Session::get('current_user'))
                     <li class="nav-item dropdown dropstart">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownCurUser">
-                            <img src="{{asset('user_icon.png')}}" alt="" style="height: 2em; width: 2em;">
+                            <img src="{{asset('storage/user_icon.png')}}" alt="" style="height: 2em; width: 2em;">
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark dropstart" aria-labelledby="navbarDropdownCurUser">
-                            <li><a href="#" class="dropdown-item">Hi {{$curUser->user_name}}</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right" aria-labelledby="navbarDropdownCurUser">
+                            <li><h6 class="dropdown-header">Hi {{$curUser->user_name}}</h6></li>
                             <li><a href="#" class="dropdown-item">Change Password</a></li>
                             <li><a href="{{route('logoutUser')}}" class="dropdown-item">Logout</a></li>
                         </ul>
                     </li>
                 @endif
             </ul>
+
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+{{-- style="position: absolute; top: 100%; right: 0%;" --}}

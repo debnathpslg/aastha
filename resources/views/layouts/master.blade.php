@@ -59,7 +59,7 @@
         .footer-classic a, .footer-classic a:focus, .footer-classic a:active {
             color: #ffffff;
         }
-        .nav-list li {
+        /* .nav-list li {
             padding-top: 5px;
             padding-bottom: 5px;
         }
@@ -74,7 +74,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-        }
+        } */
 
         .social-inner {
             display: flex;
@@ -89,7 +89,7 @@
         .social-container .col {
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .nav-list li a:before {
+        /* .nav-list li a:before {
             content: "\f14f";
             font: 400 21px/1 "Material Design Icons";
             color: #4d6de6;
@@ -100,6 +100,6 @@
             opacity: 0;
             visibility: hidden;
             transition: .22s ease;
-        }
+        } */
     </style>
 </html>
