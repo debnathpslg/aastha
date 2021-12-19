@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-start">
             <div class="col-4"></div>
-            <div class="col-4">
+            <div class="col-4 shadow p-3 mb-5 bg-body rounded">
                 <h2 style="text-align: center;">Password Reset</h2>
                 <hr />
                 <form action="{{route('submitActiveUserPasswordChangeForm')}}" method="POST">

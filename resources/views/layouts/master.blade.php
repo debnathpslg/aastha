@@ -17,7 +17,7 @@
     </head>
     <body>
         {{ View::make('layouts.header')}}
-        <div style="min-height: 600px;">
+        <div style="min-height: 600px;" class="mt-4">
             @yield('content')
         </div>
         {{ View::make('layouts.footer') }}
