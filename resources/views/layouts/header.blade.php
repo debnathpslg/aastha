@@ -22,18 +22,18 @@
 
                 @if (Session::has('current_user'))
                     @if ($user->user_role >= 98)
-                        {{-- <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="navbarDropdownUser">User</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
-                                <li><a href="/user/all" class="dropdown-item">List All Users</a></li>
-                                <li><a href="/user/verified" class="dropdown-item">List Verified Users</a></li>
-                                <li><a href="/user/unverified" class="dropdown-item">List Unverified Users</a></li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownUser">
+                                <li><a href="{{route('listUsers',['callingMethod'=>'all'])}}" class="dropdown-item">List All Users</a></li>
+                                <li><a href="{{route('listUsers',['callingMethod'=>'verified'])}}" class="dropdown-item">List Verified Users</a></li>
+                                <li><a href="{{route('listUsers',['callingMethod'=>'blocked'])}}" class="dropdown-item">List Unverified Users</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a href="#" class="dropdown-item">Map User with Employee</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a href="#" class="dropdown-item">Delete All Unverified Users</a></li>
                             </ul>
-                        </li> --}}
+                        </li>
                     @endif
 {{--                     
                     <li class="nav-item dropdown">

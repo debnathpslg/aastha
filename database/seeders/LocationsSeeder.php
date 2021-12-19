@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,31 +16,15 @@ class LocationsSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('locations')->insert([
-            [
-                'location_name'=>'All Locations',
-            ],
-            [
-                'location_name'=>'Siliguri',
-            ],
-            [
-                'location_name'=>'Malda',
-            ],
-            [
-                'location_name'=>'Mathabhanga',
-            ],
-            [
-                'location_name'=>'Baharampur',
-            ],
-            [
-                'location_name'=>'Guwahati',
-            ],
-            [
-                'location_name'=>'Tezpur',
-            ],
-            [
-                'location_name'=>'Agartala',
-            ],
-        ]);
+        $location = new Location;
+
+        $location->create(['location_name' => 'All Locations'])->save();
+        $location->create(['location_name' => 'Siliguri'])->save();
+        $location->create(['location_name' => 'Malda'])->save();
+        $location->create(['location_name' => 'Mathabhanga'])->save();
+        $location->create(['location_name' => 'Baharampur'])->save();
+        $location->create(['location_name' => 'Guwahati'])->save();
+        $location->create(['location_name' => 'Tezpur'])->save();
+        $location->create(['location_name' => 'Agartala'])->save();
     }
 }

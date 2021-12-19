@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -132,6 +133,196 @@ class UserController extends Controller
             return redirect()->route('homePage');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['other_msg' => $e->getMessage()]);
+        }
+    }
+
+    function listUsers($callingMethod = null)
+    {
+        if (Session::has('current_user')) {
+            $callingMethod = strtolower(trim($callingMethod));
+            $callingMethod = ($callingMethod == '') ? "all" : $callingMethod;
+
+            $currentUser = Session::get('current_user');
+
+            if ($currentUser->user_role >= 98) {
+                //
+                if ($callingMethod == 'all') {
+                    try {
+                        $users = DB::table('users')
+                            ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                            ->join('locations', 'users.location_id', '=', 'locations.id')
+                            ->where('users.user_role', '<', $currentUser->user_role)
+                            ->select(
+                                'users.id as uid',
+                                'users.user_name as unm',
+                                'users.user_mobile as umob',
+                                'users.user_email as ueml',
+                                'roles.role_description as rld',
+                                'locations.location_name as lnm',
+                                'users.is_active as act',
+                                'users.last_login as llg'
+                            )
+                            ->get();
+
+                        return view('user.listuser', [
+                            'users' => $users,
+                            'callingMethod' => $callingMethod,
+                            'title' => 'List of All Users'
+                        ]);
+                    } catch (Exception $e) {
+                        return redirect()->route('homePage');
+                    }
+                } elseif ($callingMethod == 'verified') {
+                    //
+                    try {
+                        $users = DB::table('users')
+                            ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                            ->join('locations', 'users.location_id', '=', 'locations.id')
+                            ->where('users.user_role', '<', $currentUser->user_role)
+                            ->where('users.is_active', '=', '1')
+                            ->select(
+                                'users.id as uid',
+                                'users.user_name as unm',
+                                'users.user_mobile as umob',
+                                'users.user_email as ueml',
+                                'roles.role_description as rld',
+                                'locations.location_name as lnm',
+                                'users.is_active as act',
+                                'users.last_login as llg'
+                            )
+                            ->get();
+
+                        return view('user.listuser', [
+                            'users' => $users,
+                            'callingMethod' => $callingMethod,
+                            'title' => 'List of Verified Users'
+                        ]);
+                    } catch (Exception $e) {
+                        return redirect()->route('homePage');
+                    }
+                } elseif ($callingMethod == 'blocked') {
+                    //
+                    try {
+                        $users = DB::table('users')
+                            ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                            ->join('locations', 'users.location_id', '=', 'locations.id')
+                            ->where('users.user_role', '<', $currentUser->user_role)
+                            ->where('users.is_active', '=', '0')
+                            ->select(
+                                'users.id as uid',
+                                'users.user_name as unm',
+                                'users.user_mobile as umob',
+                                'users.user_email as ueml',
+                                'roles.role_description as rld',
+                                'locations.location_name as lnm',
+                                'users.is_active as act',
+                                'users.last_login as llg'
+                            )
+                            ->get();
+
+                        return view('user.listuser', [
+                            'users' => $users,
+                            'callingMethod' => $callingMethod,
+                            'title' => 'List of Unvarified Users'
+                        ]);
+                    } catch (Exception $e) {
+                        return redirect()->route('homePage');
+                    }
+                } else {
+                    return redirect()->route('homePage');
+                }
+            }
+        }
+
+        return redirect()->route('homePage');
+    }
+
+    function searchAndListUser(Request $request)
+    {
+        //
+        if (Session::has('current_user')) {
+            $currentUser = Session::get('current_user');
+
+            if ($request->callingMethod == 'all') {
+                //
+                $users = DB::table('users')
+                    ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                    ->join('locations', 'users.location_id', '=', 'locations.id')
+                    ->where('users.user_role', '<', $currentUser->user_role)
+                    ->where(function ($query) use ($request) {
+                        $query->where('users.user_name', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
+                    })
+                    ->select(
+                        'users.id as uid',
+                        'users.user_name as unm',
+                        'users.user_mobile as umob',
+                        'users.user_email as ueml',
+                        'roles.role_description as rld',
+                        'locations.location_name as lnm',
+                        'users.is_active as act',
+                        'users.last_login as llg'
+                    )
+                    ->get();
+
+                $title = "Lis of all users maching " . $request->searchitem;
+            } elseif ($request->callingMethod == 'verified') {
+                $users = DB::table('users')
+                    ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                    ->join('locations', 'users.location_id', '=', 'locations.id')
+                    ->where('users.user_role', '<', $currentUser->user_role)
+                    ->where('users.is_active', '=', '1')
+                    ->where(function ($query) use ($request) {
+                        $query->where('users.user_name', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
+                    })
+                    ->select(
+                        'users.id as uid',
+                        'users.user_name as unm',
+                        'users.user_mobile as umob',
+                        'users.user_email as ueml',
+                        'roles.role_description as rld',
+                        'locations.location_name as lnm',
+                        'users.is_active as act',
+                        'users.last_login as llg'
+                    )
+                    ->get();
+
+                $title = "Lis of all verified users maching " . $request->searchitem;
+            } else {
+                $users = DB::table('users')
+                    ->join('roles', 'users.user_role', '=', 'roles.role_id')
+                    ->join('locations', 'users.location_id', '=', 'locations.id')
+                    ->where('users.user_role', '<', $currentUser->user_role)
+                    ->where('users.is_active', '=', '0')
+                    ->where(function ($query) use ($request) {
+                        $query->where('users.user_name', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
+                    })
+                    ->select(
+                        'users.id as uid',
+                        'users.user_name as unm',
+                        'users.user_mobile as umob',
+                        'users.user_email as ueml',
+                        'roles.role_description as rld',
+                        'locations.location_name as lnm',
+                        'users.is_active as act',
+                        'users.last_login as llg'
+                    )
+                    ->get();
+
+                $title = "Lis of unverified users maching " . $request->searchitem;
+            }
+            return view('user.listuser', ['users' => $users, 'callingMethod' => $request->callingMethod, 'title' => $title]);
         }
     }
 }

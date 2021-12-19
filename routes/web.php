@@ -24,3 +24,9 @@ Route::post('/login', [UserController::class, 'submitLoginInfo'])->name('submitL
 Route::get('/logout', [UserController::class, 'logoutUser'])->name('logoutUser');
 Route::get('/signup', [UserController::class, 'showRegisterPage'])->name('showRegisterPage');
 Route::post('/signup', [UserController::class, 'submitRegInfo'])->name('submitRegInfo');
+Route::get('/users/list', [UserController::class, 'listUsers'])->name('listUsers');
+Route::get('/users/search', function () {
+    return redirect()->route('homePage');
+});
+Route::post('/users/search', [UserController::class, 'searchAndListUser'])->name('searchAndListUser');
+Route::get('/users/list/{callingMethod}', [UserController::class, 'listUsers'])->name('listUsers');

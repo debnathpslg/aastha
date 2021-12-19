@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Designation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,31 +16,15 @@ class DesignationsSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('designations')->insert([
-            [
-                'designation' => 'Back Office',
-            ],
-            [
-                'designation' => 'Runner',
-            ],
-            [
-                'designation' => 'Driver',
-            ],
-            [
-                'designation' => 'Supervisor',
-            ],
-            [
-                'designation' => 'Field Supervisor',
-            ],
-            [
-                'designation' => 'Field Executive',
-            ],
-            [
-                'designation' => 'Telecaller',
-            ],
-            [
-                'designation' => '9+ Caller',
-            ],
-        ]);
+        $designation = new Designation;
+
+        $designation->create(['designation' => 'Back Office'])->save();
+        $designation->create(['designation' => 'Runner'])->save();
+        $designation->create(['designation' => 'Driver'])->save();
+        $designation->create(['designation' => 'Supervisor'])->save();
+        $designation->create(['designation' => 'Field Supervisor'])->save();
+        $designation->create(['designation' => 'Field Executive'])->save();
+        $designation->create(['designation' => 'Telecaller'])->save();
+        $designation->create(['designation' => '9+ Caller'])->save();
     }
 }
