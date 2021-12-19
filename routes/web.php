@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 
 /*
-|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------]
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -30,3 +30,12 @@ Route::get('/users/search', function () {
 });
 Route::post('/users/search', [UserController::class, 'searchAndListUser'])->name('searchAndListUser');
 Route::get('/users/list/{callingMethod}', [UserController::class, 'listUsers'])->name('listUsers');
+Route::get('/change_pwd', [UserController::class, 'changeActiveUserPassword'])->name('changeActiveUserPassword');
+Route::post('/change_pwd', [UserController::class, 'submitActiveUserPasswordChangeForm'])->name('submitActiveUserPasswordChangeForm');
+Route::get('/del_all_users', [UserController::class, 'deleteAllUnverifiedUsers'])->name('deleteAllUnverifiedUsers');
+Route::get('/user/verify/{id?}/{callingMethod?}', [UserController::class, 'verifyUser'])
+    ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('verifyUser');
+Route::get('/user/resetpwd/{id?}/{callingMethod?}', [UserController::class, 'resetUserPassword'])
+    ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('resetUserPassword');
+Route::get('/user/deluser/{id?}/{callingMethod?}', [UserController::class, 'deleteOneUser'])
+    ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('deleteOneUser');

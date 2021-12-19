@@ -23,15 +23,15 @@
                 @if (Session::has('current_user'))
                     @if ($user->user_role >= 98)
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="navbarDropdownUser">User</a>
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="navbarDropdownUser">User</a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownUser">
                                 <li><a href="{{route('listUsers',['callingMethod'=>'all'])}}" class="dropdown-item">List All Users</a></li>
                                 <li><a href="{{route('listUsers',['callingMethod'=>'verified'])}}" class="dropdown-item">List Verified Users</a></li>
                                 <li><a href="{{route('listUsers',['callingMethod'=>'blocked'])}}" class="dropdown-item">List Unverified Users</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Map User with Employee</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Delete All Unverified Users</a></li>
+                                {{-- <li><a href="#" class="dropdown-item">Map User with Employee</a></li>
+                                <li><hr class="dropdown-divider"></li> --}}
+                                <li><a href="{{route('deleteAllUnverifiedUsers')}}" class="dropdown-item">Delete All Unverified Users</a></li>
                             </ul>
                         </li>
                     @endif
@@ -56,7 +56,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right" aria-labelledby="navbarDropdownCurUser">
                             <li><h6 class="dropdown-header">Hi {{$curUser->user_name}}</h6></li>
-                            <li><a href="#" class="dropdown-item">Change Password</a></li>
+                            <li><a href="{{route('changeActiveUserPassword')}}" class="dropdown-item">Change Password</a></li>
                             <li><a href="{{route('logoutUser')}}" class="dropdown-item">Logout</a></li>
                         </ul>
                     </li>

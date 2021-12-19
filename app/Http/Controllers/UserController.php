@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use GuzzleHttp\RetryMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -153,6 +154,7 @@ class UserController extends Controller
                             ->join('locations', 'users.location_id', '=', 'locations.id')
                             ->where('users.user_role', '<', $currentUser->user_role)
                             ->select(
+                                'users.emp_id as eid',
                                 'users.id as uid',
                                 'users.user_name as unm',
                                 'users.user_mobile as umob',
@@ -162,7 +164,7 @@ class UserController extends Controller
                                 'users.is_active as act',
                                 'users.last_login as llg'
                             )
-                            ->get();
+                            ->paginate(20);
 
                         return view('user.listuser', [
                             'users' => $users,
@@ -181,6 +183,7 @@ class UserController extends Controller
                             ->where('users.user_role', '<', $currentUser->user_role)
                             ->where('users.is_active', '=', '1')
                             ->select(
+                                'users.emp_id as eid',
                                 'users.id as uid',
                                 'users.user_name as unm',
                                 'users.user_mobile as umob',
@@ -190,7 +193,7 @@ class UserController extends Controller
                                 'users.is_active as act',
                                 'users.last_login as llg'
                             )
-                            ->get();
+                            ->paginate(20);
 
                         return view('user.listuser', [
                             'users' => $users,
@@ -209,6 +212,7 @@ class UserController extends Controller
                             ->where('users.user_role', '<', $currentUser->user_role)
                             ->where('users.is_active', '=', '0')
                             ->select(
+                                'users.emp_id as eid',
                                 'users.id as uid',
                                 'users.user_name as unm',
                                 'users.user_mobile as umob',
@@ -218,7 +222,7 @@ class UserController extends Controller
                                 'users.is_active as act',
                                 'users.last_login as llg'
                             )
-                            ->get();
+                            ->paginate(20);
 
                         return view('user.listuser', [
                             'users' => $users,
@@ -254,9 +258,11 @@ class UserController extends Controller
                             ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.emp_id', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
                     })
                     ->select(
+                        'users.emp_id as eid',
                         'users.id as uid',
                         'users.user_name as unm',
                         'users.user_mobile as umob',
@@ -266,7 +272,7 @@ class UserController extends Controller
                         'users.is_active as act',
                         'users.last_login as llg'
                     )
-                    ->get();
+                    ->paginate(20);
 
                 $title = "Lis of all users maching " . $request->searchitem;
             } elseif ($request->callingMethod == 'verified') {
@@ -280,9 +286,11 @@ class UserController extends Controller
                             ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.emp_id', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
                     })
                     ->select(
+                        'users.emp_id as eid',
                         'users.id as uid',
                         'users.user_name as unm',
                         'users.user_mobile as umob',
@@ -292,7 +300,7 @@ class UserController extends Controller
                         'users.is_active as act',
                         'users.last_login as llg'
                     )
-                    ->get();
+                    ->paginate(20);
 
                 $title = "Lis of all verified users maching " . $request->searchitem;
             } else {
@@ -306,9 +314,11 @@ class UserController extends Controller
                             ->orwhere('users.user_email', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('users.user_mobile', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('roles.role_description', 'like', '%' . $request->searchitem . '%')
+                            ->orwhere('users.emp_id', 'like', '%' . $request->searchitem . '%')
                             ->orwhere('locations.location_name', 'like', '%' . $request->searchitem . '%');
                     })
                     ->select(
+                        'users.emp_id as eid',
                         'users.id as uid',
                         'users.user_name as unm',
                         'users.user_mobile as umob',
@@ -318,11 +328,144 @@ class UserController extends Controller
                         'users.is_active as act',
                         'users.last_login as llg'
                     )
-                    ->get();
+                    ->paginate(20);
 
                 $title = "Lis of unverified users maching " . $request->searchitem;
             }
             return view('user.listuser', ['users' => $users, 'callingMethod' => $request->callingMethod, 'title' => $title]);
+        }
+    }
+
+    function changeActiveUserPassword()
+    {
+        //
+        if (Session::has('current_user')) {
+            $user = Session::get('current_user');
+
+            return view('user.changepwd');
+        } else {
+            return redirect()->route('homePage');
+        }
+    }
+
+    function submitActiveUserPasswordChangeForm(Request $request)
+    {
+        if (Session::has('current_user')) {
+            $currentUser = Session::get('current_user');
+
+            $request->password = trim($request->password);
+            $request->conf_password = trim($request->conf_password);
+
+            $request->validate(
+                [
+                    'password' => 'required|min:8|max:20',
+                    'conf_password' => 'required|min:8|max:20|same:password',
+                ],
+                [
+                    'password.required' => 'Password cannot be blank.',
+                    'password.min' => 'Password must contain atleast 8 characters.',
+                    'password.max' => 'Password cannot exceed length of 20 characters.',
+                    'conf_password.required' => 'Confirm Password cannot be blank.',
+                    'conf_password.min' => 'Confirm Password must contain atleast 8 characters.',
+                    'conf_password.max' => 'Confirm Password cannot exceed length of 20 characters.',
+                    'conf_password.same' => 'Password and Confirm Password do not match.',
+                ]
+            );
+
+            $user = User::find($currentUser->id);
+
+            if (Hash::check($request->password, $user->password)) {
+                return redirect()->back()->withErrors(['conf_password' => 'New password and last passwords are same.']);
+            } else {
+                $user->update(['password' => Hash::make($request->password)]);
+
+                return redirect()->route('logoutUser');
+            }
+        }
+        return redirect()->route('homePage');
+    }
+
+    function deleteAllUnverifiedUsers()
+    {
+        //
+        if (Session::has('current_user')) {
+            $user = Session::get('current_user');
+            if ($user->user_role >= 98) {
+                $user = User::where('is_active', '=', '0')->delete();
+            }
+        }
+
+        return redirect()->route('homePage');
+    }
+
+    function verifyUser($id = null, $callingMethod = null)
+    {
+        //
+        $curUser = Session::get('current_user');
+
+        if (!isset($id) || !isset($callingMethod) || !isset($curUser) || $curUser->user_role < 98) {
+
+            return redirect()->route('homePage');
+        } else {
+            try {
+                //
+                $user = User::find($id);
+                $user->is_active = !$user->is_active;
+                $user->save();
+
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['success' => 'User verified/blocked successfully.']);
+            } catch (Exception $e) {
+                //
+                return ($e->getMessage());
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['errMsg' => $e->getMessage()]);
+            }
+        }
+    }
+
+    function resetUserPassword($id = null, $callingMethod = null)
+    {
+        //
+        $curUser = Session::get('current_user');
+
+        if (!isset($id) || !isset($callingMethod) || !isset($curUser) || $curUser->user_role < 98) {
+
+            return redirect()->route('homePage');
+        } else {
+            try {
+                //
+                $user = User::find($id);
+                $user->password = Hash::make('pass@1234');
+                $user->save();
+
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['success' => 'User password reset done successfully.']);
+            } catch (Exception $e) {
+                //
+                return ($e->getMessage());
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['errMsg' => $e->getMessage()]);
+            }
+        }
+    }
+
+    function deleteOneUser($id = null, $callingMethod = null)
+    {
+        //
+        $curUser = Session::get('current_user');
+
+        if (!isset($id) || !isset($callingMethod) || !isset($curUser) || $curUser->user_role < 98) {
+
+            return redirect()->route('homePage');
+        } else {
+            try {
+                //
+                $user = User::find($id);
+                $user->delete();
+
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['success' => 'User deleted successfully.']);
+            } catch (Exception $e) {
+                //
+                return ($e->getMessage());
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['errMsg' => $e->getMessage()]);
+            }
         }
     }
 }

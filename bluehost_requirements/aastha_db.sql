@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2021 at 02:30 PM
+-- Generation Time: Dec 19, 2021 at 07:50 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -171,10 +171,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2021_12_14_125318_create_locations_table', 1),
 (3, '2021_12_14_125808_create_designations_table', 1),
 (4, '2021_12_14_130416_create_roles_table', 1),
-(5, '2021_12_14_141707_create_users_table', 1),
 (6, '2021_12_14_150717_create_carousels_table', 1),
 (8, '2021_12_19_170040_create_relations_table', 1),
-(11, '2021_12_19_165151_create_employees_table', 2);
+(11, '2021_12_19_165151_create_employees_table', 2),
+(13, '2021_12_14_141707_create_users_table', 3);
 
 -- --------------------------------------------------------
 
@@ -273,16 +273,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_name`, `user_email`, `user_mobile`, `password`, `user_role`, `is_active`, `location_id`, `last_login`, `is_logged_in`, `emp_id`, `created_at`, `updated_at`) VALUES
-(1, 'Partha Debanth', 'partha.aastha@gmail.com', '9832356644', '$2y$10$oDGJFyrEfaM4C35DUBJCnOtORZNte1jdSlDaZVXK.BuLWIKdXhrD6', 99, 1, 1, NULL, 0, 'AAST000226', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(2, 'Md Alam', 'alam.aastha@gmail.com', '9474407312', '$2y$10$Sxb10abAx4we91zMKrVv4u1yClB8Lkqxm2fiTGhJkhg2TmjmeZBZ2', 98, 1, 1, NULL, 0, 'AAST000673', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(3, 'Sekh Shanewaz', 'skshanewaz.aastha@gmail.com', '9593901016', '$2y$10$UYklf8UYaGPTZ23VdnM8R.Rc0m6sbbooAY9x.JTStYhtvEL.JasK6', 98, 1, 1, NULL, 0, 'AAST000229', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(4, 'Pravat Sarkar', 'pravat.aastha@gmail.com', '9563152800', '$2y$10$xu8c1rJa.CU1zAwi.CbbPu0xD5lwXqKqGaQgJBQvYoG/UYXUcseSO', 6, 1, 2, NULL, 0, 'AAST000227', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(5, 'Subrata Sarlar', 'aastha.subrata@gmail.com', '9933671962', '$2y$10$vfnvVTfcVdCxahfK3IPYve26aZmD9HXrQy1m6OQSD2NCTWpAemyQG', 0, 0, 2, NULL, 0, 'AASTPROP01', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(6, 'Koustav Dey', 'koustav.aastha@gmail.com', '9933094870', '$2y$10$osOj7SlzyR5FwOmVqQIIHuW4ey4WRdhzBRC4AVQSFDK5zt/.ECDlK', 0, 0, 2, NULL, 0, 'AASTPROP02', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(7, 'Dummy User 1', 'dummy1.aastha@gmail.com', '9999999999', '$2y$10$13SGbjMvWqSbDaE6LSii/evVQs9X/jyFLwG17zP93XQL97.xgxig2', 0, 0, 2, NULL, 0, 'AAST999999', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(8, 'Dummy User 2', 'dummy2.aastha@gmail.com', '9999999998', '$2y$10$3Bd8kWu5a37brflWz5fWWeWl4wA03ng0qV.AVAUmj4gJCKZoN2Pl6', 0, 0, 2, NULL, 0, 'AAST999998', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(9, 'Dummy User 3', 'dummy3.aastha@gmail.com', '9999999997', '$2y$10$KlJbMxPFgWQ32Ha3CC7OFOOchSk6yANcCUgVUSIMgLhEG/iO29I6G', 0, 0, 2, NULL, 0, 'AAST999997', '2021-12-19 12:50:02', '2021-12-19 12:50:02'),
-(10, 'Dummy User 4', 'dummy4.aastha@gmail.com', '9999999996', '$2y$10$mM/9tPPUNaiPfLW4gETXy.W8uIHMGVCWQZ7oUyggEGz1Um005RKIS', 0, 0, 2, NULL, 0, 'AAST999996', '2021-12-19 12:50:03', '2021-12-19 12:50:03');
+(1, 'Partha Debanth', 'partha.aastha@gmail.com', '9832356644', '$2y$10$PcX/Kd5SmzuzXDW3YA7YJOqRcRQT55yPhrl/cfkZ.z5XlFskzrINS', 99, 1, 1, NULL, 0, 'AAST000226', '2021-12-19 18:48:50', '2021-12-19 18:48:50'),
+(2, 'Md Alam', 'alam.aastha@gmail.com', '9474407312', '$2y$10$QOvr./5H5ijWoeEBAJ4Wp.dyQdHXrlw90SVWAhK5iJzJO3uDvD0AS', 98, 1, 1, NULL, 0, 'AAST000673', '2021-12-19 18:48:50', '2021-12-19 18:48:50'),
+(3, 'Sekh Shanewaz', 'skshanewaz.aastha@gmail.com', '9593901016', '$2y$10$qw30.rh838wo6vaRDpAmmefU6h8wDRuK/AaEsSJO/uf6dCZYAxW7S', 98, 1, 1, NULL, 0, 'AAST000229', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(4, 'Pravat Sarkar', 'pravat.aastha@gmail.com', '9563152800', '$2y$10$Yqqqosyu9YotCJAdmDht/uDHy2.9rnxt8HZNGxd/I8ysY75UCOMn2', 6, 1, 2, NULL, 0, 'AAST000227', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(5, 'Subrata Sarkar', 'aastha.subrata@gmail.com', '9933671962', '$2y$10$1/9nmzRshcvmuXP45UDg7.ILffOfs8U0A1mMgfqAD5mkWIp6sXnrG', 98, 1, 2, NULL, 0, 'AASTPROP01', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(6, 'Koustav Dey', 'koustav.aastha@gmail.com', '9933094870', '$2y$10$ugEu8Se/wQ97Ek.m4mpo9.ACUo/Mj6j7LnzeF/7XjyHjiFKRmOfRW', 98, 1, 2, NULL, 0, 'AASTPROP02', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(7, 'Dummy User 1', 'dummy1.aastha@gmail.com', '9999999999', '$2y$10$2QFCJF8Z2tYUCZv551N2fOgWaQZKKDHE.1BfdNIG9Zqrmw3GjtQZm', 0, 0, 2, NULL, 0, 'AAST999999', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(8, 'Dummy User 2', 'dummy2.aastha@gmail.com', '9999999998', '$2y$10$IYlirOQLBYzUPJ4ov0ZZX.XOKDUeE3YWH78/kyDIPapv8acZA87Pm', 0, 0, 2, NULL, 0, 'AAST999998', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(9, 'Dummy User 3', 'dummy3.aastha@gmail.com', '9999999997', '$2y$10$mpOcWo5md59voZ7SABC53ejxzxyw3FAM/KF/bjtl1sE89DyuBqSbm', 0, 0, 2, NULL, 0, 'AAST999997', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
+(10, 'Dummy User 4', 'dummy4.aastha@gmail.com', '9999999996', '$2y$10$fP5QiJR2VTgtn5ZbyqTK5OLI8OAT7P4qGG/PrdFN8zIPms3el5NOe', 0, 0, 2, NULL, 0, 'AAST999996', '2021-12-19 18:48:51', '2021-12-19 18:48:51');
 
 --
 -- Indexes for dumped tables
@@ -386,7 +386,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
