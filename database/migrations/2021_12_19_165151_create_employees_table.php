@@ -30,7 +30,8 @@ class CreateEmployeesTable extends Migration
             $table->string('emp_bank_branch')->nullable();
             $table->string('emp_bank_ifsc')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->bigInteger('sal_type')->default(0);
+            $table->boolean('is_deleted')->default(false);
+            $table->bigInteger('sal_type')->unsigned()->default(0);
             $table->dateTime('joined_on')->nullable();
             $table->dateTime('left_on')->nullable();
             $table->timestamps();
