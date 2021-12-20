@@ -63,7 +63,7 @@
                                 </a>
                             <td style="text-align: center;">{{!($user->llg) ? "---" : $user->llg}}</td>
                             <td>
-                                <a href="#">
+                                <a href="{{route('editUser',['id'=>$user->uid, 'callingMethod'=>strtolower($callingMethod)])}}">
                                     <i class="bi-pencil-square btn btn-outline-primary" style="{font-size: 1rem; color: blue; text-decoration: none;} :hover {color: white;}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit user"></i>
                                 </a>
                                 <a href="{{route('resetUserPassword',['id'=>$user->uid, 'callingMethod'=>strtolower($callingMethod)])}}">

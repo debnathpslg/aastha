@@ -57,7 +57,7 @@ class UsersSeeder extends Seeder
             'user_email' => 'pravat.aastha@gmail.com',
             'user_mobile' => '9563152800',
             'password' => Hash::make('12345678'),
-            'user_role' => 6,
+            'user_role' => 4,
             'is_active' => true,
             'location_id' => 2,
             'is_logged_in' => false,
@@ -70,7 +70,7 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'user_role' => 98,
             'is_active' => true,
-            'location_id' => 2,
+            'location_id' => 1,
             'is_logged_in' => false,
             'emp_id' => 'AASTPROP01',
         ])->save();
@@ -81,9 +81,20 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'user_role' => 98,
             'is_active' => true,
-            'location_id' => 2,
+            'location_id' => 1,
             'is_logged_in' => false,
             'emp_id' => 'AASTPROP02',
+        ])->save();
+        $user->create([
+            'user_name' => 'Biswajit Saha',
+            'user_email' => 'aastha.biswa@gmail.com',
+            'user_mobile' => '9654853033',
+            'password' => Hash::make('12345678'),
+            'user_role' => 98,
+            'is_active' => true,
+            'location_id' => 1,
+            'is_logged_in' => false,
+            'emp_id' => 'AASTPROP03',
         ])->save();
         $user->create([
             'user_name' => 'Dummy User 1',

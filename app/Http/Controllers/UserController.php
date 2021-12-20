@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\Location;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -16,10 +19,12 @@ class UserController extends Controller
     //
     function showLoginPage()
     {
+
         //
         if (!Session::has('current_user')) {
             return view('user.login');
         } else {
+            // Session::forget('current_user');
             return redirect()->route('homePage');
         }
     }
@@ -91,6 +96,7 @@ class UserController extends Controller
                 'user_mobile' => 'required|digits:10|numeric|unique:users,user_mobile',
                 'password' => 'required|min:8|max:20',
                 'conf_password' => 'required|min:8|max:20|same:password',
+                'emp_id' => 'required|size:10|unique:users,emp_id'
             ],
             [
                 'user_name.required' => 'User name cannot be blank.',
@@ -112,28 +118,37 @@ class UserController extends Controller
                 'conf_password.min' => 'Confirm Password must contain atleast 8 characters.',
                 'conf_password.max' => 'Confirm Password cannot exceed length of 20 characters.',
                 'conf_password.same' => 'Password and Confirm Password do not match.',
+                'emp_id.required' => 'Employee id cannot be blank',
+                'emp_id.size' => 'Employee id must be exactly length of 10 characters',
+                'emp_id.unique' => 'Employee id is already registered'
             ]
         );
 
-        $newUserData = new User;
+        $emp = Employee::where('emp_id', '=', $request->emp_id)->first();
 
-        $newUserData->user_name = $request->user_name;
-        $newUserData->user_email = $request->user_email;
-        $newUserData->user_mobile = $request->user_mobile;
-        $newUserData->password = Hash::make($request->password);
-        $newUserData->user_role = 0;
-        $newUserData->is_active = false;
-        $newUserData->location_id = 2;
-        $newUserData->last_login = null;
-        $newUserData->is_logged_in = false;
-        $newUserData->emp_id = $request->emp_id;
+        if (!isset($emp)) {
+            return redirect()->back()->withErrors(['emp_id' => 'Employee id not found in employee database. Please check and try again.']);
+        } else {
+            $newUserData = new User;
 
-        try {
-            $newUserData->save();
+            $newUserData->user_name = $request->user_name;
+            $newUserData->user_email = $request->user_email;
+            $newUserData->user_mobile = $request->user_mobile;
+            $newUserData->password = Hash::make($request->password);
+            $newUserData->user_role = 0;
+            $newUserData->is_active = false;
+            $newUserData->location_id = 2;
+            $newUserData->last_login = null;
+            $newUserData->is_logged_in = false;
+            $newUserData->emp_id = $request->emp_id;
 
-            return redirect()->route('homePage');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['other_msg' => $e->getMessage()]);
+            try {
+                $newUserData->save();
+
+                return redirect()->route('homePage');
+            } catch (Exception $e) {
+                return redirect()->back()->withErrors(['other_msg' => $e->getMessage()]);
+            }
         }
     }
 
@@ -411,9 +426,12 @@ class UserController extends Controller
                 //
                 $user = User::find($id);
                 $user->is_active = !$user->is_active;
+                $user->user_role = ($user->is_active) ? $user->user_role : 0;
+                $user->location_id = ($user->is_active) ? $user->location_id : 2;
+                $msg = ($user->is_active) ? "User activated successfully." : "User de-activated successfully";
                 $user->save();
 
-                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['success' => 'User verified/blocked successfully.']);
+                return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['success' => $msg]);
             } catch (Exception $e) {
                 //
                 return ($e->getMessage());
@@ -467,5 +485,41 @@ class UserController extends Controller
                 return redirect()->route('listUsers', ['callingMethod' => $callingMethod])->withErrors(['errMsg' => $e->getMessage()]);
             }
         }
+    }
+
+    function editUser($id = null, $callingMethod = null)
+    {
+        //
+        $currentUser = Session::get('current_user');
+
+        if (!isset($id) || !isset($callingMethod) || !isset($currentUser) || $currentUser->user_role < 98) {
+            return redirect()->route('homePage');
+        } else {
+            $roles = Role::where('role_id', '<', $currentUser->user_role)->get();
+            $locations = Location::all();
+            $user = User::where('id', '=', $id)->first();
+
+            return view('user.edituser', ['callingMethod' => $callingMethod, 'roles' => $roles, 'locations' => $locations, 'user' => $user]);
+        }
+    }
+
+    function submitEditUser(Request $request)
+    {
+        $user = User::find($request->id);
+
+        if (!$user->is_active && $request->user_role > 0) {
+            return redirect()->back()->withErrors(['user_role' => 'Deactive user cannot be assigned to any Role. Please activate the user first.']);
+        } elseif ($request->user_role < 5 && $request->location_id == 1) {
+            return redirect()->back()->withErrors(['location_id' => 'Only co-ordinator and above have access to all locations.']);
+        }
+
+        try {
+            $user->user_role = $request->user_role;
+            $user->location_id = $request->location_id;
+            $user->save();
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['location_id' => $e->getMessage()]);
+        }
+        return redirect()->route('listUsers', ['callingMethod' => $request->callingMethod])->withErrors(['success' => 'User modified successfully.']);
     }
 }

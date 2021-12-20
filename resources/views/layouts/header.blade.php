@@ -1,6 +1,6 @@
 @php ($user = Session::get('current_user'))
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2d3246; color: white;">
+<nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color: #2d3246; color: white;">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <a class="navbar-brand" href="{{route('homePage')}}">
@@ -18,8 +18,6 @@
                     <a class="nav-link active" href="{{route('homePage')}}">Home</a>
                 </li>
 
-
-
                 @if (Session::has('current_user'))
                     @if ($user->user_role >= 98)
                         <li class="nav-item dropdown">
@@ -35,16 +33,54 @@
                             </ul>
                         </li>
                     @endif
-{{--                     
+
+                    @if ($user->user_role > 4)
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Employee</a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                                <li><a href="#" class="dropdown-item">List All Employees</a></li>
+                                <li><a href="#" class="dropdown-item">List Active Employees</a></li>
+                                <li><a href="#" class="dropdown-item">List Deactive Employees</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item">Add New Employee</a></li>
+                                <li><a href="#" class="dropdown-item">Add New Employee - Admin</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item">Download Employee Data</a></li>
+                            </ul>
+                        </li>
+                    @endif
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Employee</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownEmp">
-                            <li><a href="#" class="dropdown-item">List Employee</a></li>
-                            <li><a href="#" class="dropdown-item">Add New Employee</a></li>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Allocation</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                            <li><a href="#" class="dropdown-item">Allocatio links</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a href="#" class="dropdown-item">Download Employee Data</a></li>
+                            <li><a href="#" class="dropdown-item">Under Construction</a></li>
                         </ul>
-                    </li> --}}
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Approval</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                            <li><a href="#" class="dropdown-item">Allocatio links</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="#" class="dropdown-item">Under Construction</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Expense</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                            <li><a href="#" class="dropdown-item">Expense links</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="#" class="dropdown-item">Under Construction</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Incentive</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                            <li><a href="#" class="dropdown-item">Incentive links</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="#" class="dropdown-item">Under Construction</a></li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -56,6 +92,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-right" aria-labelledby="navbarDropdownCurUser">
                             <li><h6 class="dropdown-header">Hi {{$curUser->user_name}}</h6></li>
+                            <li><a href="#" class="dropdown-item">Profile</a></li>
                             <li><a href="{{route('changeActiveUserPassword')}}" class="dropdown-item">Change Password</a></li>
                             <li><a href="{{route('logoutUser')}}" class="dropdown-item">Logout</a></li>
                         </ul>

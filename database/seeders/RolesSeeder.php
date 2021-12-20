@@ -31,19 +31,19 @@ class RolesSeeder extends Seeder
         )->save();
         $roles->create(
             [
-                'role_description' => 'Back Office',
+                'role_description' => 'Co-Ordinator Level 2',
                 'role_id' => 6,
             ]
         )->save();
         $roles->create(
             [
-                'role_description' => 'Co-Ordinator Level 2',
+                'role_description' => 'Co-Ordinator Level 1',
                 'role_id' => 5,
             ]
         )->save();
         $roles->create(
             [
-                'role_description' => 'Co-Ordinator Level 1',
+                'role_description' => 'Back Office',
                 'role_id' => 4,
             ]
         )->save();

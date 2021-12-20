@@ -39,3 +39,6 @@ Route::get('/user/resetpwd/{id?}/{callingMethod?}', [UserController::class, 'res
     ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('resetUserPassword');
 Route::get('/user/deluser/{id?}/{callingMethod?}', [UserController::class, 'deleteOneUser'])
     ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('deleteOneUser');
+Route::get('/user/edituser/{id?}/{callingMethod?}', [UserController::class, 'editUser'])
+    ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('editUser');
+Route::post('/user/edituser', [UserController::class, 'submitEditUser'])->name('submitEditUser');

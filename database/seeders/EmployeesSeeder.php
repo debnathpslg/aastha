@@ -132,6 +132,25 @@ class EmployeesSeeder extends Seeder
             'left_on' => null,
         ])->save();
         $emp->create([
+            'emp_id_no' => -7,
+            'emp_id' => 'AASTPROP06',
+            'emp_location' => 2,
+            'emp_designation' => 9,
+            'emp_name' => 'Biswajit Saha',
+            'emp_email' => 'aastha.biswa@gmail.com',
+            'emp_mobile' => '9654853033',
+            'emp_ac_holder_name' => 'Biswajit Saha',
+            'emp_relation' => 1,
+            'emp_account_no' => null,
+            'emp_bank_name' => null,
+            'emp_bank_branch' => null,
+            'emp_bank_ifsc' => null,
+            'is_active' => true,
+            'sal_type' => 0,
+            'joined_on' => null,
+            'left_on' => null,
+        ])->save();
+        $emp->create([
             'emp_id_no' => -3,
             'emp_id' => 'AAST999999',
             'emp_location' => 2,

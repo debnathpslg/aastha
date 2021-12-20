@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('location_id')->unsigned()->default(2);
             $table->dateTime('last_login')->nullable();
             $table->boolean('is_logged_in')->default(false);
-            $table->string('emp_id')->nullable();
+            $table->string('emp_id')->unique();
             $table->timestamps();
         });
     }

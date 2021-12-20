@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2021 at 07:50 PM
+-- Generation Time: Dec 20, 2021 at 08:41 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.26
 
@@ -174,7 +174,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2021_12_14_150717_create_carousels_table', 1),
 (8, '2021_12_19_170040_create_relations_table', 1),
 (11, '2021_12_19_165151_create_employees_table', 2),
-(13, '2021_12_14_141707_create_users_table', 3);
+(14, '2021_12_14_141707_create_users_table', 3);
 
 -- --------------------------------------------------------
 
@@ -263,7 +263,7 @@ CREATE TABLE `users` (
   `location_id` bigint(20) UNSIGNED NOT NULL DEFAULT 2,
   `last_login` datetime DEFAULT NULL,
   `is_logged_in` tinyint(1) NOT NULL DEFAULT 0,
-  `emp_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -273,16 +273,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_name`, `user_email`, `user_mobile`, `password`, `user_role`, `is_active`, `location_id`, `last_login`, `is_logged_in`, `emp_id`, `created_at`, `updated_at`) VALUES
-(1, 'Partha Debanth', 'partha.aastha@gmail.com', '9832356644', '$2y$10$PcX/Kd5SmzuzXDW3YA7YJOqRcRQT55yPhrl/cfkZ.z5XlFskzrINS', 99, 1, 1, NULL, 0, 'AAST000226', '2021-12-19 18:48:50', '2021-12-19 18:48:50'),
-(2, 'Md Alam', 'alam.aastha@gmail.com', '9474407312', '$2y$10$QOvr./5H5ijWoeEBAJ4Wp.dyQdHXrlw90SVWAhK5iJzJO3uDvD0AS', 98, 1, 1, NULL, 0, 'AAST000673', '2021-12-19 18:48:50', '2021-12-19 18:48:50'),
-(3, 'Sekh Shanewaz', 'skshanewaz.aastha@gmail.com', '9593901016', '$2y$10$qw30.rh838wo6vaRDpAmmefU6h8wDRuK/AaEsSJO/uf6dCZYAxW7S', 98, 1, 1, NULL, 0, 'AAST000229', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(4, 'Pravat Sarkar', 'pravat.aastha@gmail.com', '9563152800', '$2y$10$Yqqqosyu9YotCJAdmDht/uDHy2.9rnxt8HZNGxd/I8ysY75UCOMn2', 6, 1, 2, NULL, 0, 'AAST000227', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(5, 'Subrata Sarkar', 'aastha.subrata@gmail.com', '9933671962', '$2y$10$1/9nmzRshcvmuXP45UDg7.ILffOfs8U0A1mMgfqAD5mkWIp6sXnrG', 98, 1, 2, NULL, 0, 'AASTPROP01', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(6, 'Koustav Dey', 'koustav.aastha@gmail.com', '9933094870', '$2y$10$ugEu8Se/wQ97Ek.m4mpo9.ACUo/Mj6j7LnzeF/7XjyHjiFKRmOfRW', 98, 1, 2, NULL, 0, 'AASTPROP02', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(7, 'Dummy User 1', 'dummy1.aastha@gmail.com', '9999999999', '$2y$10$2QFCJF8Z2tYUCZv551N2fOgWaQZKKDHE.1BfdNIG9Zqrmw3GjtQZm', 0, 0, 2, NULL, 0, 'AAST999999', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(8, 'Dummy User 2', 'dummy2.aastha@gmail.com', '9999999998', '$2y$10$IYlirOQLBYzUPJ4ov0ZZX.XOKDUeE3YWH78/kyDIPapv8acZA87Pm', 0, 0, 2, NULL, 0, 'AAST999998', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(9, 'Dummy User 3', 'dummy3.aastha@gmail.com', '9999999997', '$2y$10$mpOcWo5md59voZ7SABC53ejxzxyw3FAM/KF/bjtl1sE89DyuBqSbm', 0, 0, 2, NULL, 0, 'AAST999997', '2021-12-19 18:48:51', '2021-12-19 18:48:51'),
-(10, 'Dummy User 4', 'dummy4.aastha@gmail.com', '9999999996', '$2y$10$fP5QiJR2VTgtn5ZbyqTK5OLI8OAT7P4qGG/PrdFN8zIPms3el5NOe', 0, 0, 2, NULL, 0, 'AAST999996', '2021-12-19 18:48:51', '2021-12-19 18:48:51');
+(1, 'Partha Debanth', 'partha.aastha@gmail.com', '9832356644', '$2y$10$sReBe8d1/ok4ye5jByLjMuNX2CEHgolsdIUIBngazc99zMetamhwC', 99, 1, 1, NULL, 0, 'AAST000226', '2021-12-20 07:40:58', '2021-12-20 07:40:58'),
+(2, 'Md Alam', 'alam.aastha@gmail.com', '9474407312', '$2y$10$as7W.2OBiPkaGokwFCyKXOGdAr/dn8fcPNYeLvPYezAbFUYjpIE6m', 98, 1, 1, NULL, 0, 'AAST000673', '2021-12-20 07:40:58', '2021-12-20 07:40:58'),
+(3, 'Sekh Shanewaz', 'skshanewaz.aastha@gmail.com', '9593901016', '$2y$10$TWCIsSxZ4FuO/JHLPcGUEe5rzfZT1WEgubxkyg7NCP2PLfakYTT7G', 98, 1, 1, NULL, 0, 'AAST000229', '2021-12-20 07:40:58', '2021-12-20 07:40:58'),
+(4, 'Pravat Sarkar', 'pravat.aastha@gmail.com', '9563152800', '$2y$10$B2vXt2UvUDLLfxVmTpJrNO7ZqqwKTfsoCSuy/FAUONttjTQjFhIzy', 6, 1, 2, NULL, 0, 'AAST000227', '2021-12-20 07:40:58', '2021-12-20 07:40:58'),
+(5, 'Subrata Sarkar', 'aastha.subrata@gmail.com', '9933671962', '$2y$10$gPI5sATOySjpTPhSCwwx7eAWoWCUpRUAI6ClOZluzRN4o5ZcLhBTG', 98, 1, 2, NULL, 0, 'AASTPROP01', '2021-12-20 07:40:59', '2021-12-20 07:40:59'),
+(6, 'Koustav Dey', 'koustav.aastha@gmail.com', '9933094870', '$2y$10$xMt6eaL7dfXJbowmUCP5KOMA62b6oAX1arUduJv.qI9veTGNH5m8.', 98, 1, 2, NULL, 0, 'AASTPROP02', '2021-12-20 07:40:59', '2021-12-20 07:40:59'),
+(7, 'Dummy User 1', 'dummy1.aastha@gmail.com', '9999999999', '$2y$10$YhlVSZ2sUK2oekswKUaYj.tKzEi1xlYXRnp8W6axFUhHZ7RWePq86', 0, 0, 2, NULL, 0, 'AAST999999', '2021-12-20 07:40:59', '2021-12-20 07:40:59'),
+(8, 'Dummy User 2', 'dummy2.aastha@gmail.com', '9999999998', '$2y$10$/avptr.iCph7QvWnH5EEKOrBIc2OtecBdBuo0XCM8WVyl/ADQgtii', 0, 0, 2, NULL, 0, 'AAST999998', '2021-12-20 07:40:59', '2021-12-20 07:40:59'),
+(9, 'Dummy User 3', 'dummy3.aastha@gmail.com', '9999999997', '$2y$10$YYc1ZuT1tF8TwnixoahhWOvvG0RIrjXnVbw1FyDiFmNOq75m5/qti', 0, 0, 2, NULL, 0, 'AAST999997', '2021-12-20 07:40:59', '2021-12-20 07:40:59'),
+(10, 'Dummy User 4', 'dummy4.aastha@gmail.com', '9999999996', '$2y$10$uYXEatq.mdbay2sLENaNpOywPqP86myop0iZAl0JKJAJJ5gzsXJqy', 0, 0, 2, NULL, 0, 'AAST999996', '2021-12-20 07:41:00', '2021-12-20 07:41:00');
 
 --
 -- Indexes for dumped tables
@@ -352,7 +352,8 @@ ALTER TABLE `roles`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_user_email_unique` (`user_email`),
-  ADD UNIQUE KEY `users_user_mobile_unique` (`user_mobile`);
+  ADD UNIQUE KEY `users_user_mobile_unique` (`user_mobile`),
+  ADD UNIQUE KEY `users_emp_id_unique` (`emp_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -386,7 +387,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

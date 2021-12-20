@@ -46,7 +46,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="emp_id">Employee Id</label>
-                        <input type="password" class="form-control" id="emp_id" name="emp_id" placeholder="Employee Id" maxlength="10"  value="{{old('emp_id')}}" >
+                        <input type="text" class="form-control" id="emp_id" name="emp_id" placeholder="Employee Id" maxlength="10"  value="{{old('emp_id')}}" >
                         @error('emp_id')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
