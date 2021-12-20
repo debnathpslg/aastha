@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -24,6 +25,7 @@ Route::post('/login', [UserController::class, 'submitLoginInfo'])->name('submitL
 Route::get('/logout', [UserController::class, 'logoutUser'])->name('logoutUser');
 Route::get('/signup', [UserController::class, 'showRegisterPage'])->name('showRegisterPage');
 Route::post('/signup', [UserController::class, 'submitRegInfo'])->name('submitRegInfo');
+
 Route::get('/users/list', [UserController::class, 'listUsers'])->name('listUsers');
 Route::get('/users/search', function () {
     return redirect()->route('homePage');
@@ -42,3 +44,6 @@ Route::get('/user/deluser/{id?}/{callingMethod?}', [UserController::class, 'dele
 Route::get('/user/edituser/{id?}/{callingMethod?}', [UserController::class, 'editUser'])
     ->where(['id' => '[0-9]+', 'callingMethod' => '[A-Za-z]+'])->name('editUser');
 Route::post('/user/edituser', [UserController::class, 'submitEditUser'])->name('submitEditUser');
+
+Route::get('/emp/list/{callingMethod?}', [EmployeeController::class, 'listEmp'])->name('listEmp');
+Route::get('/emp/export', [EmployeeController::class, 'exportEmployeeData'])->name('exportEmployeeData');

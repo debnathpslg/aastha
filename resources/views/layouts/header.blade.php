@@ -34,25 +34,23 @@
                         </li>
                     @endif
 
-                    @if ($user->user_role > 4)
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Employee</a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
-                                <li><a href="#" class="dropdown-item">List All Employees</a></li>
-                                <li><a href="#" class="dropdown-item">List Active Employees</a></li>
-                                <li><a href="#" class="dropdown-item">List Deactive Employees</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Employee</a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
+                            <li><a href="{{route('listEmp',['callingMethod'=>'active'])}}" class="dropdown-item">List Employees</a></li>
+                            <li><a href="{{route('listEmp',['callingMethod'=>'deactive'])}}" class="dropdown-item">List Deactive Employees</a></li>
+                            @if ($user->user_role >= 4)
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a href="#" class="dropdown-item">Add New Employee</a></li>
-                                <li><a href="#" class="dropdown-item">Add New Employee - Admin</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Download Employee Data</a></li>
-                            </ul>
-                        </li>
-                    @endif
+                            @endif
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="{{route('exportEmployeeData')}}" class="dropdown-item">Download Employee Data</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Allocation</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
-                            <li><a href="#" class="dropdown-item">Allocatio links</a></li>
+                            <li><a href="#" class="dropdown-item">Allocation links</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a href="#" class="dropdown-item">Under Construction</a></li>
                         </ul>

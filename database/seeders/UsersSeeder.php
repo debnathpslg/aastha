@@ -96,49 +96,5 @@ class UsersSeeder extends Seeder
             'is_logged_in' => false,
             'emp_id' => 'AASTPROP03',
         ])->save();
-        $user->create([
-            'user_name' => 'Dummy User 1',
-            'user_email' => 'dummy1.aastha@gmail.com',
-            'user_mobile' => '9999999999',
-            'password' => Hash::make('12345678'),
-            'user_role' => 0,
-            'is_active' => false,
-            'location_id' => 2,
-            'is_logged_in' => false,
-            'emp_id' => 'AAST999999',
-        ])->save();
-        $user->create([
-            'user_name' => 'Dummy User 2',
-            'user_email' => 'dummy2.aastha@gmail.com',
-            'user_mobile' => '9999999998',
-            'password' => Hash::make('12345678'),
-            'user_role' => 0,
-            'is_active' => false,
-            'location_id' => 2,
-            'is_logged_in' => false,
-            'emp_id' => 'AAST999998',
-        ])->save();
-        $user->create([
-            'user_name' => 'Dummy User 3',
-            'user_email' => 'dummy3.aastha@gmail.com',
-            'user_mobile' => '9999999997',
-            'password' => Hash::make('12345678'),
-            'user_role' => 0,
-            'is_active' => false,
-            'location_id' => 2,
-            'is_logged_in' => false,
-            'emp_id' => 'AAST999997',
-        ])->save();
-        $user->create([
-            'user_name' => 'Dummy User 4',
-            'user_email' => 'dummy4.aastha@gmail.com',
-            'user_mobile' => '9999999996',
-            'password' => Hash::make('12345678'),
-            'user_role' => 0,
-            'is_active' => false,
-            'location_id' => 2,
-            'is_logged_in' => false,
-            'emp_id' => 'AAST999996',
-        ])->save();
     }
 }
