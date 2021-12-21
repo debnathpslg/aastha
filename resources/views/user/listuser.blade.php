@@ -4,7 +4,7 @@
     <div class="container shadow p-3 mb-5 bg-body rounded" style="margin-top: 2em; padding: 2em;">
         <div class="row">
             <div class="col-sm-12">
-                <form class="form-horizontal" action="{{route('searchAndListUser')}}" method="post">
+                <form class="form-horizontal" action="{{route('searchAndListUser')}}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <input type="text" class="form-control" id="searchitem" name="searchitem" placeholder="Search Name, Email, Mobile etc.">

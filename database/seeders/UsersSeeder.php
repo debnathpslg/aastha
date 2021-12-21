@@ -94,7 +94,7 @@ class UsersSeeder extends Seeder
             'is_active' => true,
             'location_id' => 1,
             'is_logged_in' => false,
-            'emp_id' => 'AASTPROP03',
+            'emp_id' => 'AAST000102',
         ])->save();
     }
 }

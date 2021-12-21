@@ -38,8 +38,10 @@
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="navbarDropdownEmp">Employee</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownEmp">
                             <li><a href="{{route('listEmp',['callingMethod'=>'active'])}}" class="dropdown-item">List Employees</a></li>
-                            <li><a href="{{route('listEmp',['callingMethod'=>'deactive'])}}" class="dropdown-item">List Deactive Employees</a></li>
-                            @if ($user->user_role >= 4)
+                            @if ($user->user_role >4)
+                                <li><a href="{{route('listEmp',['callingMethod'=>'deactive'])}}" class="dropdown-item">List Deactive Employees</a></li>
+                            @endif
+                            @if ($user->user_role >=4)
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a href="#" class="dropdown-item">Add New Employee</a></li>
                             @endif

@@ -133,7 +133,7 @@ class EmployeesSeeder extends Seeder
         ])->save();
         $emp->create([
             'emp_id_no' => -7,
-            'emp_id' => 'AASTPROP03',
+            'emp_id' => 'AAST000102',
             'emp_location' => 2,
             'emp_designation' => 9,
             'emp_name' => 'Biswajit Saha',

@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('emp_id')->unique();
             $table->bigInteger('emp_location')->unsigned();
             $table->bigInteger('emp_designation')->unsigned();
-            $table->string('emp_name')->unique();
+            $table->string('emp_name');
             $table->string('emp_email')->nullable();
             $table->string('emp_mobile')->nullable();
             $table->string('emp_ac_holder_name')->nullable();
@@ -34,6 +34,8 @@ class CreateEmployeesTable extends Migration
             $table->bigInteger('sal_type')->unsigned()->default(0);
             $table->dateTime('joined_on')->nullable();
             $table->dateTime('left_on')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('last_modified_by')->nullable();
             $table->timestamps();
         });
     }

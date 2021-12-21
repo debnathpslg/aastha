@@ -31,7 +31,7 @@ class EmployeeExport implements FromCollection, WithHeadings
                 'employees.emp_account_no',
                 'employees.emp_bank_name',
                 'employees.emp_bank_branch',
-                'employees.emp_bank_ifsc'
+                'employees.emp_bank_ifsc',
             )->get();
     }
 

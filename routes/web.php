@@ -46,4 +46,9 @@ Route::get('/user/edituser/{id?}/{callingMethod?}', [UserController::class, 'edi
 Route::post('/user/edituser', [UserController::class, 'submitEditUser'])->name('submitEditUser');
 
 Route::get('/emp/list/{callingMethod?}', [EmployeeController::class, 'listEmp'])->name('listEmp');
+Route::post('/emp/search', [EmployeeController::class, 'searchEmp'])->name('searchEmp');
+Route::get('/emp/search', function () {
+    return redirect()->route('homePage');
+});
+
 Route::get('/emp/export', [EmployeeController::class, 'exportEmployeeData'])->name('exportEmployeeData');
