@@ -10,35 +10,35 @@
                 <form action="{{route('submitRegInfo')}}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="user_name">Name *</label>
+                        <label for="user_name">Name</label>
                         <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" maxlength="50"  value="{{old('user_name')}}">
                         @error('user_name')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="user_email">Email address *</label>
+                        <label for="user_email">Email address</label>
                         <input type="text" class="form-control" id="user_email" name="user_email" placeholder="Email" maxlength="50"  value="{{old('user_email')}}" >
                         @error('user_email')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="user_mobile">Mobile *</label>
+                        <label for="user_mobile">Mobile</label>
                         <input type="text" class="form-control" id="user_mobile" name="user_mobile" placeholder="Mobile" maxlength="10"  value="{{old('user_mobile')}}" >
                         @error('user_mobile')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="password">Password *</label>
+                        <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="20">
                         @error('password')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="conf_password">Retype Password *</label>
+                        <label for="conf_password">Retype Password</label>
                         <input type="password" class="form-control" id="conf_password" name="conf_password" placeholder="Confirm Password" maxlength="20">
                         @error('conf_password')
                             <div class="alert alert-danger">{{$message}}</div>

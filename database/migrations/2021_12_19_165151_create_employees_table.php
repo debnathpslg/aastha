@@ -33,7 +33,7 @@ class CreateEmployeesTable extends Migration
             $table->boolean('is_deleted')->default(false);
             $table->bigInteger('sal_type')->unsigned()->default(0);
             $table->dateTime('joined_on')->nullable();
-            $table->dateTime('left_on')->nullable();
+            $table->dateTime('left_on')->nullable()->default(null);
             $table->string('created_by')->nullable();
             $table->string('last_modified_by')->nullable();
             $table->timestamps();

@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach ($employees as $emp)
                         <tr>
-                            <td><a href="#"><span style="font-weight: bold;">{{$emp->eid}}</span></a></td>
+                            <td><a href="#" target="_blank"><span style="font-weight: bold;">{{$emp->eid}}</span></a></td>
                             <td>{{$emp->eloc}}</td>
                             <td>{{$emp->edesig}}</td>
                             <td>{{$emp->ename}}</td>
@@ -50,7 +50,7 @@
                             <td>{{$emp->emob}}</td>
                             <td>{{$emp->eahname}}</td>
                             <td>{{$emp->erel}}</td>
-                            <td>{{$emp->eacno}}</td>
+                            <td>{{str_replace("'","",$emp->eacno)}}</td>
                             <td>{{$emp->ebank}}</td>
                             <td>{{$emp->ebranch}}</td>
                             <td>{{$emp->eifsc}}</td>

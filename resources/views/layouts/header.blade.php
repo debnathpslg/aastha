@@ -43,7 +43,7 @@
                             @endif
                             @if ($user->user_role >=4)
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Add New Employee</a></li>
+                                <li><a href="{{route('createNewEmployee')}}" class="dropdown-item">Create New Employee</a></li>
                             @endif
                             <li><hr class="dropdown-divider"></li>
                             <li><a href="{{route('exportEmployeeData')}}" class="dropdown-item">Download Employee Data</a></li>

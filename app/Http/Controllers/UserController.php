@@ -80,14 +80,6 @@ class UserController extends Controller
 
     function submitRegInfo(Request $request)
     {
-
-        $request->user_name = ucwords(trim($request->user_name));
-        $request->user_email = trim($request->user_email);
-        $request->user_mobile = trim($request->user_mobile);
-        $request->password = trim($request->password);
-        $request->conf_password = trim($request->conf_password);
-        $request->emp_id = strtoupper(trim($request->emp_id));
-
         $request->validate(
             [
                 'user_name' => 'required|min:4|max:50',
@@ -130,8 +122,8 @@ class UserController extends Controller
         } else {
             $newUserData = new User;
 
-            $newUserData->user_name = $request->user_name;
-            $newUserData->user_email = $request->user_email;
+            $newUserData->user_name = ucwords($request->user_name);
+            $newUserData->user_email = strtolower($request->user_email);
             $newUserData->user_mobile = $request->user_mobile;
             $newUserData->password = Hash::make($request->password);
             $newUserData->user_role = 0;
@@ -288,7 +280,7 @@ class UserController extends Controller
                     )
                     ->paginate(20);
 
-                $title = "Lis of all users maching " . $request->searchitem;
+                $title = "Lis from all users maching " . $request->searchitem;
             } elseif ($request->callingMethod == 'verified') {
                 $users = DB::table('users')
                     ->join('roles', 'users.user_role', '=', 'roles.role_id')
@@ -316,7 +308,7 @@ class UserController extends Controller
                     )
                     ->paginate(20);
 
-                $title = "Lis of all verified users maching " . $request->searchitem;
+                $title = "Lis from all verified users maching " . $request->searchitem;
             } else {
                 $users = DB::table('users')
                     ->join('roles', 'users.user_role', '=', 'roles.role_id')
@@ -344,7 +336,7 @@ class UserController extends Controller
                     )
                     ->paginate(20);
 
-                $title = "Lis of unverified users maching " . $request->searchitem;
+                $title = "Lis from unverified users maching " . $request->searchitem;
             }
             return view('user.listuser', ['users' => $users, 'callingMethod' => $request->callingMethod, 'title' => $title]);
         }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Session;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get("/clr", function () {
+    Session::forget('current_user');
+
+    $user = User::where('is_logged_in', '=', true)->update(['is_logged_in' => false]);
+});
 
 Route::get('/', [DashboardController::class, 'home'])->name('homePage');
 
@@ -50,5 +57,11 @@ Route::post('/emp/search', [EmployeeController::class, 'searchEmp'])->name('sear
 Route::get('/emp/search', function () {
     return redirect()->route('homePage');
 });
+Route::get('/emp/new', [EmployeeController::class, 'createNewEmployee'])->name('createNewEmployee');
+Route::post('/emp/new', [EmployeeController::class, 'submitNewEmpData'])->name('submitNewEmpData');
 
 Route::get('/emp/export', [EmployeeController::class, 'exportEmployeeData'])->name('exportEmployeeData');
+
+Route::get('/cal', function () {
+    return view('calendar');
+});
