@@ -59,6 +59,11 @@ Route::get('/emp/search', function () {
 });
 Route::get('/emp/new', [EmployeeController::class, 'createNewEmployee'])->name('createNewEmployee');
 Route::post('/emp/new', [EmployeeController::class, 'submitNewEmpData'])->name('submitNewEmpData');
+Route::post('/emp/edit', [EmployeeController::class, 'submitEditedEmployee'])->name('submitEditedEmployee');
+Route::get('/emp/edit/{id}/{callingMethod}', [EmployeeController::class, 'editEmpData'])->name('editEmpData');
+Route::get('/emp/edit/', function () {
+    return redirect()->back();
+});
 
 Route::get('/emp/export', [EmployeeController::class, 'exportEmployeeData'])->name('exportEmployeeData');
 

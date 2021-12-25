@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach ($employees as $emp)
                         <tr>
-                            <td><a href="#" target="_blank"><span style="font-weight: bold;">{{$emp->eid}}</span></a></td>
+                            <td><a href="{{route('editEmpData',['id'=>$emp->id,'callingMethod'=>$callingMethod])}}"><span style="font-weight: bold;">{{$emp->eid}}</span></a></td>
                             <td>{{$emp->eloc}}</td>
                             <td>{{$emp->edesig}}</td>
                             <td>{{$emp->ename}}</td>

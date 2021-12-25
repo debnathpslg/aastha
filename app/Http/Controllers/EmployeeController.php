@@ -307,4 +307,36 @@ class EmployeeController extends Controller
             return redirect()->back()->withErrors(['sqlError' => $e->getMessage()]);
         }
     }
+
+    function editEmpData($id = null, $callingMethod = null)
+    {
+        $currentUser = Session::get('current_user');
+
+        if (!isset($currentUser) || $currentUser->user_role < 5) {
+            return redirect('homePage');
+        } else {
+            $roles = Role::all();
+            $designations = Designation::all();
+            $relations = Relation::all();
+            $locations = Location::where('id', '>', '1')->get();
+
+            $employee = Employee::find($id);
+
+            if (!isset($employee)) return redirect()->back();
+
+            return view('employee.edit', [
+                'callingMethod' => $callingMethod,
+                'roles' => $roles,
+                'designations' => $designations,
+                'relations' => $relations,
+                'employee' => $employee,
+                'locations' => $locations
+            ]);
+        }
+    }
+
+    function submitEditedEmployee(Request $request)
+    {
+        return $request;
+    }
 }
