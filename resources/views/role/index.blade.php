@@ -25,7 +25,7 @@
                             <h4>List of User Roles</h4>
                         </span>
                         <span class="float-end">
-                            <a href="{{ route('role.create') }}" class="btn btn-primary">Create New Role</a>
+                            <a href="{{ route('role.create') }}" class="btn btn-sm btn-outline-primary">Create New Role</a>
                         </span>
                     </div>
                     <div class="card-body">
@@ -35,7 +35,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Role Name</th>
-                                        <th scope="col">Role Short</th>
+                                        <th scope="col">Role Short Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -55,7 +55,7 @@
                                         </td>
                                         <td>{{ $item->short_name }}</td>
                                         <td>
-                                            <a href="#" class="badge rounded-pill text-bg-danger"
+                                            <a href="#" class="btn btn-sm rounded-pill btn-outline-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#roleDeleteModal"
                                                 onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('role.destroy', $item->id) }}');"
@@ -92,8 +92,8 @@
                                     <h1 class="modal-title fs-5 text-danger text-center" id="modalLabel"></h1>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Back</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Confirm Delete</button>
                                 </div>
                             </form>
                         </div>

@@ -87,7 +87,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a href="#"
-                                        class="btn btn-md text-bg-danger float-end m-1"
+                                        class="btn btn-sm btn-outline-danger float-end m-1"
                                         onclick="event.preventDefault();
                                             if(confirm('Deactivate {{ $user->name }}?')) {
                                                 document.getElementById('deactiveUserForm').submit();
@@ -102,7 +102,7 @@
                                         @csrf
                                         $@method('DELETE')
                                     </form>
-                                    <button class="btn btn-md text-bg-warning float-end m-1"
+                                    <button class="btn btn-sm btn-outline-warning float-end m-1"
                                         onclick="event.preventDefault();
                                             if(confirm('Reset password for {{ $user->name }}?')) {
                                                 document.getElementById('resetPwdForm').submit();
@@ -117,7 +117,7 @@
                                         @csrf
                                     </form>
                                     <a href="{{ route('user.edit', $user->id) }}"
-                                        class="btn btn-md text-bg-primary float-end m-1">
+                                        class="btn btn-sm btn-outline-primary float-end m-1">
                                         <i class="bi bi-pencil"></i>
                                         Edit User
                                     </a>

@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Locations Dashboard</h1>
+    <h1>Relationship Dashboard</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ route('home.index') }}">Home</a>
             </li>
-            <li class="breadcrumb-item active">Locations</li>
+            <li class="breadcrumb-item active">Relationships</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -22,43 +22,41 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="float-start">
-                            <h4>List of Locations</h4>
+                            <h4>List of Relationships</h4>
                         </span>
                         <span class="float-end">
-                            <a href="{{ route('location.create') }}" class="btn btn-sm btn-outline-primary">Create New Location</a>
+                            <a href="{{ route('relationship.create') }}" class="btn btn-sm btn-outline-primary">Create New Relationship</a>
                         </span>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-sm table-hover text-nowrap">
+                            <table class="table table-sm table-hover table-responsive text-nowrap">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Location Name</th>
-                                        <th scope="col">Location Short Name</th>
+                                        <th scope="col">Relationship Name</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($locations as $key => $item)
+                                    @foreach ($dataSet as $key => $item)
                                     <tr>
                                         <th scope="row">
-                                            {{ $key + $locations->firstItem() }}
+                                            {{ $key + $dataSet->firstItem() }}
                                         </th>
                                         <td>
-                                            <a href="{{ route('location.edit', $item->id) }}"
+                                            <a href="{{ route('relationship.edit', $item->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 title="Edit {{ $item->name }}">
                                                 {{ $item->name }}
                                             </a>
                                         </td>
-                                        <td>{{ $item->short_name }}</td>
                                         <td>
                                             <a href="#" class="btn btn-sm rounded-pill btn-outline-danger"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#locationDeleteModal"
-                                                onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('location.destroy', $item->id) }}');"
+                                                data-bs-target="#deleteModal"
+                                                onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('relationship.destroy', $item->id) }}');"
                                                 >
                                                 <i class="bi bi-trash"></i>
                                             </a>
@@ -70,19 +68,19 @@
                         </div>
                     </div>
                     <div class="card-footer text-center">
-                        {{ $locations->links() }}
+                        {{ $dataSet->links() }}
                     </div>
                 </div>
 
                 <!-- Modal -->
                 <div class="modal fade"
-                    id="locationDeleteModal"
+                    id="deleteModal"
                     tabindex="-1"
                     aria-labelledby="modalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="#" id="deleteLocationForm" method="POST">
+                            <form action="#" id="deleteForm" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <div class="modal-header">
@@ -105,9 +103,9 @@
 </section>
 
 <script type="text/javascript">
-    function populateModal(locationName, formAction) {
-        document.getElementById('modalLabel').innerHTML = 'Delete '+ locationName + "?"
-        document.getElementById('deleteLocationForm').action = formAction;
+    function populateModal(itemName, formAction) {
+        document.getElementById('modalLabel').innerHTML = 'Delete '+ itemName + "?"
+        document.getElementById('deleteForm').action = formAction;
     }
 </script>
 

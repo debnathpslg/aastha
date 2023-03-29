@@ -26,7 +26,7 @@
                             <h4>List of Active Users</h4>
                         </span>
                         <span class="float-end">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary">Create New User</a>
+                            <a href="{{ route('user.create') }}" class="btn btn-sm btn-outline-primary">Create New User</a>
                         </span>
                     </div>
                     <div class="card-body">
@@ -60,13 +60,7 @@
                                             {{ $item->email }}
                                         </td>
                                         <td>
-                                            {{-- <a href="{{ route('user.edit', $item->id) }}" class="btn rounded-pill btn-primary btn-sm">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <a href="" class="btn rounded-pill btn-warning btn-sm">
-                                                <i class="bi bi-key"></i>
-                                            </a> --}}
-                                            <a href="#" class="btn rounded-pill btn-danger btn-sm"
+                                            <a href="#" class="btn rounded-pill btn-outline-danger btn-sm"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#toggleUserModal"
                                                 onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('user.destroy', $item->id) }}', 'Deactivate');"
@@ -115,9 +109,9 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Deactive User Name</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Action</th>
                                         <th scope="col">Role</th>
                                         <th scope="col">Controled Locations</th>
-                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,6 +125,15 @@
                                         </td>
                                         <td>
                                             {{ $item->email }}
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn rounded-pill btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#toggleUserModal"
+                                                onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('user.destroy', $item->id) }}', 'Activate');"
+                                                >
+                                                <i class="bi bi-person-fill-check"></i>
+                                            </a>
                                         </td>
                                         <td>
                                             {{ $item->role->name }}
@@ -147,15 +150,6 @@
                                                 None
                                             </span>
                                             @endif
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn rounded-pill btn-primary btn-sm"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#toggleUserModal"
-                                                onclick="event.preventDefault(); populateModal('{{ $item->name }}', '{{ route('user.destroy', $item->id) }}', 'Activate');"
-                                                >
-                                                <i class="bi bi-person-fill-check"></i>
-                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -186,8 +180,8 @@
                                     <h1 class="modal-title fs-5 text-danger text-center" id="modalLabel"></h1>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                                    <button type="submit" class="btn btn-danger">Confirm</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Back</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Confirm</button>
                                 </div>
                             </form>
                         </div>

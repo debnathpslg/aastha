@@ -16,8 +16,8 @@
 
             <ul id="masters-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{{ route('role.index') }}">
-                    <i class="bi bi-circle"></i><span>Role</span>
+                    <a href="{{ route('designation.index') }}">
+                    <i class="bi bi-circle"></i><span>Designation</span>
                     </a>
                 </li>
 
@@ -28,8 +28,26 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('relationship.index') }}">
+                    <i class="bi bi-circle"></i><span>Relationship</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('role.index') }}">
+                    <i class="bi bi-circle"></i><span>Role</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('user.index') }}">
                     <i class="bi bi-circle"></i><span>User</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('workstatus.index') }}">
+                    <i class="bi bi-circle"></i><span>Work Status</span>
                     </a>
                 </li>
             </ul>

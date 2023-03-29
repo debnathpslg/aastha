@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PwdController;
+use App\Http\Controllers\RelationshipController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkStatusController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::resource('/home', HomeController::class)->only('index');
     Route::resource('/role', RoleController::class)->except('show');
+    Route::resource('/designation', DesignationController::class)->except('show');
+    Route::resource('/relationship', RelationshipController::class)->except('show');
+    Route::resource('/workstatus', WorkStatusController::class)->except('show');
     Route::resource('/location', LocationController::class)->except('show');
     Route::resource('/user', UserController::class);
     Route::post('/user/{user}/reset-pwd', [UserController::class, 'resetPwd'])->name('user.reset-pwd');

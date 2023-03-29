@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary" type="submit">Create</button>
+                                <button class="btn btn-sm btn-outline-primary" type="submit">Create</button>
                             </div>
                         </form>
                     </div>
