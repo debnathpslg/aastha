@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Location::class, 'user_locations')->withTimestamps()->orderByPivot('locations.name');
     }
+
+    public function createdBy()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

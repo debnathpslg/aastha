@@ -13,4 +13,9 @@ class Relationship extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function employee()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

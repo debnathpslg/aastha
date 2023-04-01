@@ -22,6 +22,12 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('ifsc.index') }}">
+                    <i class="bi bi-circle"></i><span>IFSC</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('location.index') }}">
                     <i class="bi bi-circle"></i><span>Location</span>
                     </a>
@@ -56,7 +62,7 @@
         <li class="nav-heading">Components</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link collapsed" href="{{ route('employee.index') }}">
                 <i class="bi bi-people"></i>
                 <span>Employee</span>
             </a>

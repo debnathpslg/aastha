@@ -14,4 +14,9 @@ class WorkStatus extends Model
         'name',
         'short_name',
     ];
+
+    public function employee()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

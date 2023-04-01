@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('ifscs', function (Blueprint $table) {
             $table->id();
+            $table->string('bank')->index();
             $table->string('ifsc', 11)->unique();
-            $table->string('bank_name')->index();
-            $table->string('bank_short_name', 4)->index();
-            $table->string('branch_name', 100)->index();
+            $table->string('branch', 100)->index();
+            $table->text('address')->nullable();
+            $table->string('city1', 50)->index()->nullable();
+            $table->string('city2', 50)->index()->nullable();
+            $table->string('state', 50)->index()->nullable();
+            $table->string('std_code', 10)->index()->nullable();
+            $table->string('phone', 10)->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

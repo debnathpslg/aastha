@@ -19,4 +19,9 @@ class Location extends Model
     {
         return $this->belongsToMany(User::class, 'user_locations')->withTimestamps()->orderByPivot('users.name');
     }
+
+    public function employee()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

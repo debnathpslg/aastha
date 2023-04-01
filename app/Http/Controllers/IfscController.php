@@ -7,59 +7,24 @@ use Illuminate\Http\Request;
 
 class IfscController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //
+    public function index(Request $request, $q = "")
     {
         //
-    }
+        // if ($request->has('q')) {
+        $q = $request->q;
+        $dataSet = Ifsc::where('ifsc', 'LIKE', "%{$q}%")
+            ->orWhere('bank', 'LIKE', "%{$q}%")
+            ->orWhere('branch', 'LIKE', "%{$q}%")
+            // ->orWhere('address', 'LIKE', "%{$q}%")
+            ->orderBy('ifsc')
+            ->paginate(50);
+        // }
+        // else {
+        //     $dataSet = Ifsc::get()->sortBy('ifsc')->paginate(50);
+        // }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ifsc $ifsc)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ifsc $ifsc)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ifsc $ifsc)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ifsc $ifsc)
-    {
-        //
+        // $request->session()->flash("success", "{$q} searched successfully.");
+        return view('ifsc.index', compact(['q', 'dataSet']));
     }
 }
