@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Designation;
-use App\Models\Employee;
 use App\Models\Ifsc;
+use App\Models\Employee;
 use App\Models\Location;
-use App\Models\Relationship;
 use App\Models\WorkStatus;
+use App\Models\Designation;
+use App\Models\Relationship;
 use Illuminate\Http\Request;
+use App\Models\RecentActivity;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
@@ -202,10 +203,11 @@ class EmployeeController extends Controller
             'mobile_no'             => 'bail|required|max:10|min:10|unique:employees,mobile_no',
             'alternate_no'          => 'bail|max:10',
             'office_mobile_no'      => 'bail|max:10',
-            'account_holder_name'   => 'bail|required|max:100|min:10',
+            'account_holder_name'   => 'bail|required|max:100|min:5',
             'relationship_id'       => 'bail|required',
             'ifsc_id'               => 'bail|required|max:11|min:11|exists:ifscs,ifsc',
             'account_number'        => 'bail|required|confirmed|max:25',
+            // date_of_join
         ]);
 
         $emp = new Employee();
@@ -263,6 +265,48 @@ class EmployeeController extends Controller
             })
             ->first();
 
-        return view('employee.showbank', compact(['dataSet', 'q']));
+        return view('employee.showbank', compact(['dataSet', 'id', 'q']));
+    }
+
+    public function showEmpDetails(Request $request, $id, $q)
+    {
+        //
+        $dataSet = Employee::with(['workStatus', 'location', 'designation', 'relationship', 'ifsc', 'createdBy'])
+            ->where('id', $id)
+            ->whereHas('workStatus', function ($qry1) {
+                $qry1->where('name', 'Active');
+            })
+            ->first();
+
+        return view('employee.showemp', compact(['dataSet', 'id', 'q']));
+    }
+
+    public function authEmpDetails(Request $request, $id, $q)
+    {
+        //
+        $emp = Employee::find($id);
+
+        if (!$emp || $emp->is_authorised) {
+            $request->session()->flash("danger", "Employee not found.");
+            return redirect()->route('employee.index', 'active');
+        } else {
+            $maxId = Employee::max('employee_code');
+            // dd($maxId);
+            $emp->is_authorised = true;
+            $emp->employee_code = $maxId + 1;
+            $emp->save();
+
+            $ra = RecentActivity::make([
+                'user_id'   => Auth::id(),
+                'title'     => "Employee Alteration",
+                'content'   => Auth::user()->name . " authorised " . $emp->employee_name . ".",
+                'component' => "EMPLOYEE",
+                'bs_colour' => 'primary',
+            ]);
+            $ra->save();
+
+            $request->session()->flash("success", "Employee authorised successfully.");
+            return redirect()->route('employee.index', 'active');
+        }
     }
 }

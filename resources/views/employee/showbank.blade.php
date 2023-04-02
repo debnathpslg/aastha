@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Employees Dashboard</h1>
+    <h1>Employees View (Bank Only)</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">

@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
     Route::post('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
     Route::get('/employee/show-bank/{id}/{q}', [EmployeeController::class, 'showEmpBankDetails'])->name('employee.showbank');
+    Route::get('/employee/show-emp/{id}/{q}', [EmployeeController::class, 'showEmpDetails'])->name('employee.showemp');
+    Route::patch('/employee/auth-emp/{id}/{q}', [EmployeeController::class, 'authEmpDetails'])->name('employee.authemp');
 
     Route::get("/employee", function () {
         return redirect()->route('employee.index');

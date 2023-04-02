@@ -194,7 +194,7 @@
                                                 <th scope="col">{{ $key + $dataSet->firstItem() }}</th>
                                                 <td>{{$item->employee_code }}</td>
                                                 <td>
-                                                    {{$item->employee_name }}
+                                                    <a href="{{ route('employee.showemp', [$item->id, $q]) }}">{{$item->employee_name }}</a>
                                                 </td>
                                                 <td>{{$item->designation->name }}</td>
                                                 <td>{{$item->location->name }}</td>
