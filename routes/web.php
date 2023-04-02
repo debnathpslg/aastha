@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/employee/dashboard/{q?}', [EmployeeController::class, 'index'])->name('employee.index');
     Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
+    Route::post('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
+    Route::get('/employee/show-bank/{id}/{q}', [EmployeeController::class, 'showEmpBankDetails'])->name('employee.showbank');
 
     Route::get("/employee", function () {
         return redirect()->route('employee.index');

@@ -120,18 +120,18 @@
                                         <div class="col-md-4">
                                             <label for="loc" class="form-label">Location</label>
                                             <select name="loc" id="loc" class="form-select">
-                                                <option value="" {{ ($loc == "") ? "selected" : "" }}>All Locations</option>
+                                                <option value="" selected>All Locations</option>
                                                 @foreach ($allLocations as $item)
-                                                <option value="{{ $item->name }}" {{ ($loc == $item->name) ? "selected" : "" }}>{{ $item->name }}</option>
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="desig" class="form-label">Designation</label>
                                             <select name="desig" id="desig" class="form-select">
-                                                <option value="" {{ ($desig == "") ? "selected" : "" }}>All Designations</option>
+                                                <option value="" selected>All Designations</option>
                                                 @foreach ($allDesignations as $item)
-                                                <option value="{{ $item->name }}" {{ ($desig == $item->name) ? "selected" : "" }}>{{ $item->name }}</option>
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -143,7 +143,7 @@
                                                     id="searchStr"
                                                     name="searchStr"
                                                     aria-describedby="inputGroupPrepend"
-                                                    value="{{ $searchStr }}"
+                                                    value=""
                                                     >
                                                     <button class="btn btn-sm btn-outline-primary" id="inputGroupPrepend" type="submit">Go</button>
                                             </div>
@@ -186,7 +186,6 @@
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Mobile</th>
                                                 <th scope="col">Bank Details</th>
-                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -194,13 +193,18 @@
                                             <tr>
                                                 <th scope="col">{{ $key + $dataSet->firstItem() }}</th>
                                                 <td>{{$item->employee_code }}</td>
-                                                <td>{{$item->employee_name }}</td>
+                                                <td>
+                                                    {{$item->employee_name }}
+                                                </td>
                                                 <td>{{$item->designation->name }}</td>
                                                 <td>{{$item->location->name }}</td>
                                                 <td>{{$item->email }}</td>
                                                 <td>{{$item->mobile_no }}/{{$item->alternate_no }}</td>
-                                                <td>Show</td>
-                                                <td>Terminate</td>
+                                                <td>
+                                                    <a href="{{ route('employee.showbank', [$item->id, $q]) }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                                                        <i class="bi bi-coin"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -208,7 +212,7 @@
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-center">
-                                    {{ $dataSet->links() }}
+                                    {{ $dataSet->appends($params)->links() }}
                                 </div>
                             </div>
                         </div>
