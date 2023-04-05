@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Location;
 use App\Models\WorkStatus;
 use App\Models\Designation;
+use App\Models\EmployeeBankChange;
 use App\Models\Relationship;
 use Illuminate\Http\Request;
 use App\Models\RecentActivity;
@@ -207,7 +208,7 @@ class EmployeeController extends Controller
             'relationship_id'       => 'bail|required',
             'ifsc_id'               => 'bail|required|max:11|min:11|exists:ifscs,ifsc',
             'account_number'        => 'bail|required|confirmed|max:25',
-            // date_of_join
+            'date_of_join'          => 'bail|required',
         ]);
 
         $emp = new Employee();
@@ -265,7 +266,12 @@ class EmployeeController extends Controller
             })
             ->first();
 
-        return view('employee.showbank', compact(['dataSet', 'id', 'q']));
+        $newBank = EmployeeBankChange::where('employee_id', $id)
+            ->where('is_updated', false)
+            ->latest()
+            ->first();
+
+        return view('employee.showbank', compact(['dataSet', 'id', 'q', 'newBank']));
     }
 
     public function showEmpDetails(Request $request, $id, $q)
@@ -306,7 +312,93 @@ class EmployeeController extends Controller
             $ra->save();
 
             $request->session()->flash("success", "Employee authorised successfully.");
+
             return redirect()->route('employee.index', 'active');
         }
+    }
+
+    public function addNewBankDetails(Request $request, $id, $q)
+    {
+        //
+        $allRelations = Relationship::all()->sortBy('name');
+
+        return view('employee.changebank', compact([
+            'id',
+            'q',
+            'allRelations',
+        ]));
+    }
+
+    public function saveNewBankDetails(Request $request, $id, $q)
+    {
+        //
+        $request->validate([
+            'account_holder_name'   => 'bail|required|max:100|min:5',
+            'relationship_id'       => 'bail|required',
+            'ifsc_id'               => 'bail|required|max:11|min:11|exists:ifscs,ifsc',
+            'account_number'        => 'bail|required|confirmed|max:25',
+        ]);
+
+        $emp = Employee::where('id', $id)->first();
+
+        $newBank = new EmployeeBankChange();
+
+        $newBank->account_holder_name       = ucwords(strtolower($request->account_holder_name));
+        $newBank->relationship_id           = $request->relationship_id;
+        $newBank->account_number            = $request->account_number;
+        $newBank->ifsc_id                   = Ifsc::where('ifsc', $request->ifsc_id)->first()->id;
+        $newBank->employee_id               = $id;
+
+        $newBank->save();
+
+        $emp->is_bank_changed = true;
+        $emp->save();
+
+        $ra = RecentActivity::make([
+            'user_id'   => Auth::id(),
+            'title'     => "Employee Bank Change",
+            'content'   => Auth::user()->name . " altered bank details of " . $emp->employee_name . ".",
+            'component' => "EMPLOYEE",
+            'bs_colour' => 'danger',
+        ]);
+        $ra->save();
+
+        $request->session()->flash("success", "Employee bank account altered successfully.");
+
+        return redirect()->route('employee.index', compact(['q']));
+    }
+
+    public function updateNewBankDetails(Request $request, $id, $q)
+    {
+        //
+        $emp = Employee::where('id', $id)->first();
+        $newBank = EmployeeBankChange::where('employee_id', $id)
+            ->where('is_updated', false)
+            ->latest()
+            ->first();
+
+        $emp->account_holder_name   = $newBank->account_holder_name;
+        $emp->relationship_id       = $newBank->relationship_id;
+        $emp->account_number        = $newBank->account_number;
+        $emp->ifsc_id               = $newBank->ifsc_id;
+        $emp->is_bank_changed       = false;
+        $emp->save();
+
+        $newBank->is_updated = true;
+        $newBank->save();
+        $newBank->delete();
+
+        $ra = RecentActivity::make([
+            'user_id'   => Auth::id(),
+            'title'     => "Employee Bank Change",
+            'content'   => Auth::user()->name . " authorised change bank details of " . $emp->employee_name . ".",
+            'component' => "EMPLOYEE",
+            'bs_colour' => 'success',
+        ]);
+        $ra->save();
+
+        $request->session()->flash("success", "Employee bank account alteration authorised successfully.");
+
+        return redirect()->route('employee.index', compact(['q']));
     }
 }

@@ -234,6 +234,7 @@
                                         <div class="row">
                                             <div class="col-lg-3"><strong>Bank A/c Change Status</strong></div>
                                             <div class="col-lg-9">
+                                                <a href="{{ route('employee.showbank', [$id, $q]) }}">
                                                 @if (!$dataSet->is_bank_changed)
                                                 <span class="badge badge-sm text-bg-success rounded-pill">
                                                     No Changes Requested
@@ -243,6 +244,7 @@
                                                     Auth Pending
                                                 </span>
                                                 @endif
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

@@ -18,4 +18,10 @@ class Relationship extends Model
     {
         return $this->hasMany('App\Models\Employee');
     }
+
+    public function employeeBankChange()
+    {
+        return $this->hasMany('App\Model\EmployeeBankChange');
+    }
+
 }

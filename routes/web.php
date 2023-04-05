@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employee/show-bank/{id}/{q}', [EmployeeController::class, 'showEmpBankDetails'])->name('employee.showbank');
     Route::get('/employee/show-emp/{id}/{q}', [EmployeeController::class, 'showEmpDetails'])->name('employee.showemp');
     Route::patch('/employee/auth-emp/{id}/{q}', [EmployeeController::class, 'authEmpDetails'])->name('employee.authemp');
+    Route::get('/employee/change-bank/{id}/{q}', [EmployeeController::class, 'addNewBankDetails'])->name('employee.changebank');
+    Route::post('/employee/save-bank/{id}/{q}', [EmployeeController::class, 'saveNewBankDetails'])->name('employee.savebank');
+    Route::put('/employee/update-bank/{id}/{q}', [EmployeeController::class, 'updateNewBankDetails'])->name('employee.updatebank');
 
     Route::get("/employee", function () {
         return redirect()->route('employee.index');

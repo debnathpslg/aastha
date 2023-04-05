@@ -68,4 +68,9 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function employeeBankChange()
+    {
+        return $this->hasMany('App\Model\EmployeeBankChange');
+    }
 }
