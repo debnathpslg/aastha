@@ -6,39 +6,41 @@
         <table id="zero_config" class="table table-striped table-bordered table-sm table-hover">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th>Language</th>
-                    <th>Is System Language</th>
-                    <th>Deleted Language</th>
+                    <th>Edu. Board</th>
+                    <th>Is System Board</th>
+                    <th>Deleted Board</th>
                     <th>Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach ($languages as $language)
+                @foreach ($boards as $board)
                 <tr>
                     <td class="text-center">
-                        <a href="{{ $language->trashed() ? '#' : route('languages.show', $language) }}">
-                            {{ $language->name }}
+                        <a href="{{ $board->trashed() ? '#' : route('boards.show', $board) }}">
+                            {{ $board->name }}
                         </a>
                     </td>
 
-                    <td class="{{ $language->is_system ? 'bg-warning' : 'bg-info' }} text-white text-center">
-                        {{ $language->is_system ? "Yes" : "No" }}
-                    </td>
-
-                    <td class="{{ $language->trashed() ? 'bg-danger' : 'bg-success' }} text-white text-center">
-                        {{ $language->trashed() ? "Yes" : "No" }}
+                    <td class="text-center">
+                        <i class="m-r-10 mdi mdi-checkbox-blank-circle {{ $board->is_system ? 'text-warning' : 'text-info' }}"></i>
+                        {{ $board->is_system ? "Yes" : "No" }}
                     </td>
 
                     <td class="text-center">
-                        @if (!$language->is_system)
-                            @if (!$language->deleted_at)
-                                <a href="{{ route('languages.edit', $language) }}" 
+                        <i class="m-r-10 mdi mdi-checkbox-blank-circle {{ $board->trashed() ? 'text-danger' : 'text-success' }}"></i>
+                        {{ $board->trashed() ? "Yes" : "No" }}
+                    </td>
+
+                    <td class="text-center">
+                        @if (!$board->is_system)
+                            @if (!$board->deleted_at)
+                                <a href="{{ route('boards.edit', $board) }}" 
                                     class="btn btn-outline-primary">
                                     Edit
                                 </a>
                                 
-                                <form action="{{ route('languages.destroy', $language) }}" 
+                                <form action="{{ route('boards.destroy', $board) }}" 
                                     method="POST" 
                                     style="display:inline">
                                     @csrf
@@ -51,7 +53,7 @@
                                     </button>
                                 </form>
                             @else
-                                <form action="{{ route('languages.restore', $language->id) }}" 
+                                <form action="{{ route('boards.restore', $board->id) }}" 
                                     method="POST" 
                                     style="display:inline">
                                     @csrf
@@ -74,7 +76,7 @@
             <tfoot>
                 <tr>
                     <td colspan="7">
-                        <a type="button" class="btn btn-info btn-rounded" href="{{ route('languages.create') }}">Add New Language</a>
+                        <a type="button" class="btn btn-info btn-rounded" href="{{ route('boards.create') }}">Add New Board</a>
                     </td>
                 </tr>
             </tfoot>

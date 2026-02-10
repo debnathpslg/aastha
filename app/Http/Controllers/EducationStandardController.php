@@ -143,7 +143,7 @@ class EducationStandardController extends Controller
                 ->with("error", "System/Deleted standards cannot be edited...");
         else {
             $breadCrumbProps = [
-                'page_name' => "Language",
+                'page_name' => "Edication Standard",
                 'bread_crumbs' => [
                     [
                         'label' => 'Home',
@@ -217,9 +217,9 @@ class EducationStandardController extends Controller
 
     public function restore(Request $request, $id)
     {
-        $language = EducationStandard::withTrashed()->findOrFail($id);
+        $standard = EducationStandard::withTrashed()->findOrFail($id);
 
-        $language->restore();
+        $standard->restore();
 
         return redirect()
             ->route('standards.index')

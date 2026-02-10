@@ -5,17 +5,17 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header bg-info">
-                <h4 class="m-b-0 text-white">Language Alteration Form</h4>
+                <h4 class="m-b-0 text-white">Education Board Alteration Form</h4>
             </div>
 
             <form method="POST" 
-                action="{{ route('languages.update', $language) }}" 
+                action="{{ route('boards.update', $board) }}" 
                 class="row g-3 m-2" novalidate>
                 @csrf
                 @method('PUT')
 
                 <div class="card-body col-md-12">
-                    <h4 class="card-title">Language Info</h4>
+                    <h4 class="card-title">Education Board Info</h4>
                     {{-- @if($errors->any())
                         <ul>
                             @foreach($errors->all() as $error)
@@ -34,9 +34,9 @@
                                 colSpan='col-md-12'
                                 type="text"
                                 name="name"
-                                labelCaption="Language"
+                                labelCaption="Edu. Board"
                                 extraClass="text-capitalize"
-                                :receivedData="$language->name"
+                                :receivedData="$board->name"
                                 required
                             />
                         </div>
@@ -49,7 +49,7 @@
                                     class="btn btn-info waves-effect waves-light">Save</button>
                                 <a type="submit" 
                                     class="btn btn-dark waves-effect waves-light"
-                                    href="{{ route('languages.index') }}">Cancel</a>
+                                    href="{{ route('boards.index') }}">Cancel</a>
                             </div>
                         </div>
                     </div>
