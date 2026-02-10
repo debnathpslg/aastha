@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EducationBoardController;
+use App\Http\Controllers\EducationStandardController;
 use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\RoleController;
@@ -38,6 +40,16 @@ Route::middleware('auth')->group(
         Route::post('languages/{language}/restore', [LanguageController::class, 'restore'])
             ->name('languages.restore');
         Route::resource('languages', LanguageController::class);
+
+        // Education Board CRUD
+        Route::post('boards/{board}/restore', [EducationBoardController::class, 'restore'])
+            ->name('boards.restore');
+        Route::resource('boards', EducationBoardController::class);
+
+        // Education Standard CRUD
+        Route::post('standards/{standard}/restore', [EducationStandardController::class, 'restore'])
+            ->name('standards.restore');
+        Route::resource('standards', EducationStandardController::class);
 
         // Users Route
         Route::resource('users', UserController::class)

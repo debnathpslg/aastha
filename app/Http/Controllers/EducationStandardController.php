@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\EducationStandard;
 
-class LanguageController extends Controller
+class EducationStandardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LanguageController extends Controller
     public function index(Request $request)
     {
         $breadCrumbProps = [
-            'page_name' => "Language",
+            'page_name' => "Education Standard",
             'bread_crumbs' => [
                 [
                     'label' => 'Home',
@@ -29,19 +29,19 @@ class LanguageController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Language',
+                    'label' => 'Education Std.',
                 ],
             ],
         ];
 
-        $languages = Language::select(
+        $standards = EducationStandard::select(
             'id',
             'name',
             'is_system',
             'deleted_at',
         )->withTrashed()->get();
 
-        return view('Language.index', compact('breadCrumbProps', 'languages'));
+        return view('EducationStandard.index', compact('breadCrumbProps', 'standards'));
     }
 
     /**
@@ -65,8 +65,8 @@ class LanguageController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Language',
-                    'url' => route('languages.index'),
+                    'label' => 'Education Std.',
+                    'url' => route('standards.index'),
                 ],
                 [
                     'label' => 'New',
@@ -74,7 +74,7 @@ class LanguageController extends Controller
             ],
         ];
 
-        return view('Language.create', compact('breadCrumbProps'));
+        return view('EducationStandard.create', compact('breadCrumbProps'));
     }
 
     /**
@@ -85,24 +85,24 @@ class LanguageController extends Controller
         $currentUser = $request->user();
 
         $validated = $request->validate([
-            'name'      => 'required|string|max:50|unique:languages,name',
+            'name'      => 'required|string|max:50|unique:education_standards,name',
         ]);
 
-        Language::create([
+        EducationStandard::create([
             'name'       => $validated['name'],
             'is_system'  => false,
             'created_by' => $currentUser->employee_id,
         ]);
 
         return redirect()
-            ->route('languages.index')
-            ->with('success', "Language created successfully...");
+            ->route('standards.index')
+            ->with('success', "Education standard created successfully...");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Language $language)
+    public function show(Request $request, EducationStandard $standard)
     {
         $breadCrumbProps = [
             'page_name' => "Language",
@@ -120,8 +120,8 @@ class LanguageController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Language',
-                    'url' => route('languages.index'),
+                    'label' => 'Education Std.',
+                    'url' => route('standards.index'),
                 ],
                 [
                     'label' => 'Info',
@@ -129,18 +129,18 @@ class LanguageController extends Controller
             ],
         ];
 
-        return view('Language.show', compact('language', 'breadCrumbProps'));
+        return view('EducationStandard.show', compact('standard', 'breadCrumbProps'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Language $language)
+    public function edit(EducationStandard $standard)
     {
-        if ($language->is_system && $language->trashed())
+        if ($standard->is_system && $standard->trashed())
             return redirect()
-                ->route('languages.index')
-                ->with("error", "System/Deleted languages cannot be edited...");
+                ->route('standards.index')
+                ->with("error", "System/Deleted standards cannot be edited...");
         else {
             $breadCrumbProps = [
                 'page_name' => "Language",
@@ -158,8 +158,8 @@ class LanguageController extends Controller
                         // 'url' => route('home'),
                     ],
                     [
-                        'label' => 'Language',
-                        'url' => route('languages.index'),
+                        'label' => 'Education Std.',
+                        'url' => route('standards.index'),
                     ],
                     [
                         'label' => 'Edit',
@@ -167,14 +167,14 @@ class LanguageController extends Controller
                 ],
             ];
 
-            return view('Language.edit', compact('language', 'breadCrumbProps'));
+            return view('EducationStandard.edit', compact('standard', 'breadCrumbProps'));
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Language $language)
+    public function update(Request $request, EducationStandard $standard)
     {
         $currentUser = $request->user();
 
@@ -184,45 +184,45 @@ class LanguageController extends Controller
                 'string',
                 'max:50',
                 Rule::unique('languages', 'name')
-                    ->ignore($language->id)
+                    ->ignore($standard->id)
                     ->whereNull('deleted_at'),
             ],
         ]);
 
-        $validated['updated_by'] = $currentUser->employee->id;
-        $language->update($validated);
+        $validated['updated_by'] = $currentUser->employee_id;
+        $standard->update($validated);
 
         return redirect()
-            ->route('languages.index')
-            ->with('success', 'Language updated successfully...');
+            ->route('standards.index')
+            ->with('success', 'Education standard updated successfully...');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Language $language)
+    public function destroy(Request $request, EducationStandard $standard)
     {
-        if ($language->is_system)
+        if ($standard->is_system)
             return redirect()
-                ->route('languages.index')
-                ->with("error", "System languages cannot be deleted...");
+                ->route('standards.index')
+                ->with("error", "System standards cannot be deleted...");
         else {
-            $language->delete();
+            $standard->delete();
 
             return redirect()
-                ->route('languages.index')
-                ->with("success", "Language deleted successfully...");
+                ->route('standards.index')
+                ->with("success", "Education standard deleted successfully...");
         }
     }
 
     public function restore(Request $request, $id)
     {
-        $language = Language::withTrashed()->findOrFail($id);
+        $language = EducationStandard::withTrashed()->findOrFail($id);
 
         $language->restore();
 
         return redirect()
-            ->route('languages.index')
-            ->with("success", "Language restored successfully...");
+            ->route('standards.index')
+            ->with("success", "Education standard restored successfully...");
     }
 }

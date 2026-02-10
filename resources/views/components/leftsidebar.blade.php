@@ -64,7 +64,7 @@
             </li>
             @endsuOrAdmin
 
-            {{-- temporary links --}}
+            {{-- temporary links - begin --}}
             <li class="sidebar-item">
                 <a
                     href="{{ route('languages.index') }}"
@@ -76,6 +76,31 @@
                     >
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="{{ route('standards.index') }}"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Education Std.</span
+                    >
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="{{ route('boards.index') }}"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Edu. Board</span
+                    >
+                </a>
+            </li>
+            {{-- temporary links - end --}}
 
             <li class="sidebar-item">
                 <a

@@ -5,14 +5,14 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header bg-info">
-                <h4 class="m-b-0 text-white">Language Creation Form</h4>
+                <h4 class="m-b-0 text-white">Education Standard Creation Form</h4>
             </div>
 
-            <form method="POST" action="{{ route('languages.store') }}" class="row g-3 m-2" novalidate>
+            <form method="POST" action="{{ route('standards.store') }}" class="row g-3 m-2" novalidate>
                 @csrf
 
                 <div class="card-body col-md-12">
-                    <h4 class="card-title">Language Info</h4>
+                    <h4 class="card-title">Education Standard Info</h4>
                     {{-- @if($errors->any())
                         <ul>
                             @foreach($errors->all() as $error)
@@ -31,7 +31,7 @@
                                 colSpan='col-md-12'
                                 type="text"
                                 name="name"
-                                labelCaption="Language"
+                                labelCaption="Education Std."
                                 extraClass="text-capitalize"
                                 required
                             />
@@ -45,7 +45,7 @@
                                     class="btn btn-info waves-effect waves-light">Save</button>
                                 <a type="submit" 
                                     class="btn btn-dark waves-effect waves-light"
-                                    href="{{ route('languages.index') }}">Cancel</a>
+                                    href="{{ route('standards.index') }}">Cancel</a>
                             </div>
                         </div>
                     </div>

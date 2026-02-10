@@ -6,39 +6,41 @@
         <table id="zero_config" class="table table-striped table-bordered table-sm table-hover">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th>Language</th>
-                    <th>Is System Language</th>
-                    <th>Deleted Language</th>
+                    <th>Standard</th>
+                    <th>Is System Standard</th>
+                    <th>Deleted Standard</th>
                     <th>Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach ($languages as $language)
+                @foreach ($standards as $standard)
                 <tr>
                     <td class="text-center">
-                        <a href="{{ $language->trashed() ? '#' : route('languages.show', $language) }}">
-                            {{ $language->name }}
+                        <a href="{{ $standard->trashed() ? '#' : route('standards.show', $standard) }}">
+                            {{ $standard->name }}
                         </a>
                     </td>
 
-                    <td class="{{ $language->is_system ? 'bg-warning' : 'bg-info' }} text-white text-center">
-                        {{ $language->is_system ? "Yes" : "No" }}
-                    </td>
-
-                    <td class="{{ $language->trashed() ? 'bg-danger' : 'bg-success' }} text-white text-center">
-                        {{ $language->trashed() ? "Yes" : "No" }}
+                    <td class="text-center">
+                        <i class="m-r-10 mdi mdi-checkbox-blank-circle {{ $standard->is_system ? 'text-warning' : 'text-info' }}"></i>
+                        {{ $standard->is_system ? "Yes" : "No" }}
                     </td>
 
                     <td class="text-center">
-                        @if (!$language->is_system)
-                            @if (!$language->deleted_at)
-                                <a href="{{ route('languages.edit', $language) }}" 
+                        <i class="m-r-10 mdi mdi-checkbox-blank-circle {{ $standard->trashed() ? 'text-danger' : 'text-success' }}"></i>
+                        {{ $standard->trashed() ? "Yes" : "No" }}
+                    </td>
+
+                    <td class="text-center">
+                        @if (!$standard->is_system)
+                            @if (!$standard->deleted_at)
+                                <a href="{{ route('standards.edit', $standard) }}" 
                                     class="btn btn-outline-primary">
                                     Edit
                                 </a>
                                 
-                                <form action="{{ route('languages.destroy', $language) }}" 
+                                <form action="{{ route('standards.destroy', $standard) }}" 
                                     method="POST" 
                                     style="display:inline">
                                     @csrf
@@ -51,7 +53,7 @@
                                     </button>
                                 </form>
                             @else
-                                <form action="{{ route('languages.restore', $language->id) }}" 
+                                <form action="{{ route('standards.restore', $standard->id) }}" 
                                     method="POST" 
                                     style="display:inline">
                                     @csrf
@@ -74,7 +76,7 @@
             <tfoot>
                 <tr>
                     <td colspan="7">
-                        <a type="button" class="btn btn-info btn-rounded" href="{{ route('languages.create') }}">Add New Language</a>
+                        <a type="button" class="btn btn-info btn-rounded" href="{{ route('standards.create') }}">Add New Standard</a>
                     </td>
                 </tr>
             </tfoot>
