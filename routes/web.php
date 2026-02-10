@@ -1,15 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EducationBoardController;
-use App\Http\Controllers\EducationStandardController;
-use App\Http\Controllers\EmployeeJoiningController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\RelationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\RelationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EducationBoardController;
+use App\Http\Controllers\EmployeeJoiningController;
+use App\Http\Controllers\EducationStandardController;
+use App\Http\Controllers\FinanceCompanyController;
 
 Route::middleware('guest')->group(
     function () {
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(
         Route::post('relations/{relation}/restore', [RelationController::class, 'restore'])
             ->name('relations.restore');
         Route::resource('relations', RelationController::class);
+
+        // Company CRUD
+        Route::post('companies/{company}/restore', [FinanceCompanyController::class, 'restore'])
+            ->name('companies.restore');
+        Route::resource('companies', FinanceCompanyController::class);
 
         // Users Route
         Route::resource('users', UserController::class)

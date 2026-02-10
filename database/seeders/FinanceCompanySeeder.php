@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
+use App\Models\FinanceCompany;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CompanySeeder extends Seeder
+class FinanceCompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,12 +28,12 @@ class CompanySeeder extends Seeder
         })->value('employee_id');
 
         foreach ($companies as [$name, $slug]) {
-            Company::updateOrCreate(
+            FinanceCompany::updateOrCreate(
                 ['name' => $name],
                 [
                     'created_by' => $suEmployeeId,
                     'slug' => $slug,
-                    'is_system' => true,
+                    'is_system' => false,
                 ],
             );
         }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('finance_companies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 100)->unique()->index();
             $table->string('slug', 20)->unique()->index();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('finance_companies');
     }
 };

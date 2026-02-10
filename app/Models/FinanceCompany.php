@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Company extends Model
+class FinanceCompany extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
@@ -45,6 +45,6 @@ class Company extends Model
 
     public function agreements(): HasMany // checked from my end
     {
-        return $this->hasMany(Agreement::class, 'company_id');
+        return $this->hasMany(Agreement::class, 'finance_company_id');
     }
 }

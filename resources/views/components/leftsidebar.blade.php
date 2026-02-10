@@ -115,12 +115,12 @@
 
             <li class="sidebar-item">
                 <a
-                    href="#"
+                    href="{{ route('companies.index') }}"
                     class="sidebar-link"
                 >
                     <i class="mdi mdi-account-box"></i>
                     <span class="hide-menu"
-                        >Company</span
+                        >Finance Company</span
                     >
                 </a>
             </li>

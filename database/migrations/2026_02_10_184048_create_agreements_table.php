@@ -23,7 +23,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('company_id')
-                ->references('id')->on('companies');
+                ->references('id')->on('finance_companies');
 
             $table->foreign('created_by')
                 ->references('employee_id')->on('users');

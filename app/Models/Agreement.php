@@ -28,7 +28,7 @@ class Agreement extends Model
 
     public function company(): BelongsTo // checked from my end
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(FinanceCompany::class, 'company_id');
     }
 
     public function uploadedAgreements(): HasMany // checked from my end

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EducationBoard;
+use App\Models\FinanceCompany;
 use Illuminate\Validation\Rule;
 
-class EducationBoardController extends Controller
+class FinanceCompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class EducationBoardController extends Controller
     public function index(Request $request)
     {
         $breadCrumbProps = [
-            'page_name' => "Education Board",
+            'page_name' => "Finance Company",
             'bread_crumbs' => [
                 [
                     'label' => 'Home',
@@ -29,19 +29,20 @@ class EducationBoardController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Edu. Board',
+                    'label' => 'Company',
                 ],
             ],
         ];
 
-        $boards = EducationBoard::select(
+        $companies = FinanceCompany::select(
             'id',
             'name',
+            'slug',
             'is_system',
             'deleted_at',
         )->withTrashed()->get();
 
-        return view('EducationBoard.index', compact('breadCrumbProps', 'boards'));
+        return view('FinanceCompany.index', compact('breadCrumbProps', 'companies'));
     }
 
     /**
@@ -50,7 +51,7 @@ class EducationBoardController extends Controller
     public function create(Request $request)
     {
         $breadCrumbProps = [
-            'page_name' => "Education Board",
+            'page_name' => "Finance Company",
             'bread_crumbs' => [
                 [
                     'label' => 'Home',
@@ -65,8 +66,8 @@ class EducationBoardController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Edu. Board',
-                    'url' => route('boards.index'),
+                    'label' => 'Finance Company',
+                    'url' => route('companies.index'),
                 ],
                 [
                     'label' => 'New',
@@ -74,7 +75,7 @@ class EducationBoardController extends Controller
             ],
         ];
 
-        return view('EducationBoard.create', compact('breadCrumbProps'));
+        return view('FinanceCompany.create', compact('breadCrumbProps'));
     }
 
     /**
@@ -85,27 +86,29 @@ class EducationBoardController extends Controller
         $currentUser = $request->user();
 
         $validated = $request->validate([
-            'name'      => 'required|string|max:100|unique:education_boards,name',
+            'name'      => 'required|string|max:100|unique:finance_companies,name',
+            'slug'      => 'required|string|max:20|unique:finance_companies,slug',
         ]);
 
-        EducationBoard::create([
+        FinanceCompany::create([
             'name'       => $validated['name'],
+            'slug'       => $validated['slug'],
             'is_system'  => false,
             'created_by' => $currentUser->employee_id,
         ]);
 
         return redirect()
-            ->route('boards.index')
-            ->with('success', "Education boad created successfully...");
+            ->route('companies.index')
+            ->with('success', "Finance Company created successfully...");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, EducationBoard $board)
+    public function show(Request $request, FinanceCompany $company)
     {
         $breadCrumbProps = [
-            'page_name' => "Education Board",
+            'page_name' => "Finance Company",
             'bread_crumbs' => [
                 [
                     'label' => 'Home',
@@ -120,8 +123,8 @@ class EducationBoardController extends Controller
                     // 'url' => route('home'),
                 ],
                 [
-                    'label' => 'Edu. Board',
-                    'url' => route('boards.index'),
+                    'label' => 'Finance Company',
+                    'url' => route('companies.index'),
                 ],
                 [
                     'label' => 'Info',
@@ -129,21 +132,21 @@ class EducationBoardController extends Controller
             ],
         ];
 
-        return view('EducationBoard.show', compact('board', 'breadCrumbProps'));
+        return view('FinanceCompany.show', compact('company', 'breadCrumbProps'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EducationBoard $board)
+    public function edit(FinanceCompany $company)
     {
-        if ($board->is_system && $board->trashed())
+        if ($company->is_system && $company->trashed())
             return redirect()
-                ->route('boards.index')
-                ->with("error", "System/Deleted boards cannot be edited...");
+                ->route('companies.index')
+                ->with("error", "System/Deleted Company cannot be edited...");
         else {
             $breadCrumbProps = [
-                'page_name' => "Education Board",
+                'page_name' => "Finance Company",
                 'bread_crumbs' => [
                     [
                         'label' => 'Home',
@@ -158,8 +161,8 @@ class EducationBoardController extends Controller
                         // 'url' => route('home'),
                     ],
                     [
-                        'label' => 'Edu. Board',
-                        'url' => route('boards.index'),
+                        'label' => 'Finance Company',
+                        'url' => route('companies.index'),
                     ],
                     [
                         'label' => 'Edit',
@@ -167,14 +170,14 @@ class EducationBoardController extends Controller
                 ],
             ];
 
-            return view('EducationBoard.edit', compact('board', 'breadCrumbProps'));
+            return view('FinanceCompany.edit', compact('company', 'breadCrumbProps'));
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EducationBoard $board)
+    public function update(Request $request, FinanceCompany $company)
     {
         $currentUser = $request->user();
 
@@ -182,47 +185,55 @@ class EducationBoardController extends Controller
             'name' => [
                 'required',
                 'string',
-                'max:50',
-                Rule::unique('education_boards', 'name')
-                    ->ignore($board->id)
+                'max:100',
+                Rule::unique('companies', 'name')
+                    ->ignore($company->id)
+                    ->whereNull('deleted_at'),
+            ],
+            'slug' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('companies', 'slug')
+                    ->ignore($company->id)
                     ->whereNull('deleted_at'),
             ],
         ]);
 
         $validated['updated_by'] = $currentUser->employee_id;
-        $board->update($validated);
+        $company->update($validated);
 
         return redirect()
-            ->route('boards.index')
-            ->with('success', 'Education board updated successfully...');
+            ->route('companies.index')
+            ->with('success', 'Finance Company updated successfully...');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, EducationBoard $board)
+    public function destroy(Request $request, FinanceCompany $company)
     {
-        if ($board->is_system)
+        if ($company->is_system)
             return redirect()
-                ->route('boards.index')
+                ->route('companies.index')
                 ->with("error", "System boards cannot be deleted...");
         else {
-            $board->delete();
+            $company->delete();
 
             return redirect()
-                ->route('boards.index')
-                ->with("success", "Education board deleted successfully...");
+                ->route('companies.index')
+                ->with("success", "Finance Company deleted successfully...");
         }
     }
 
     public function restore(Request $request, $id)
     {
-        $board = EducationBoard::withTrashed()->findOrFail($id);
+        $company = FinanceCompany::withTrashed()->findOrFail($id);
 
-        $board->restore();
+        $company->restore();
 
         return redirect()
-            ->route('boards.index')
-            ->with("success", "Education board restored successfully...");
+            ->route('companies.index')
+            ->with("success", "Finance Company restored successfully...");
     }
 }
