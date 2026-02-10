@@ -39,21 +39,21 @@ class WorkExperience extends Model
     protected function company_name(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function job_title(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function manager_feedback(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 }

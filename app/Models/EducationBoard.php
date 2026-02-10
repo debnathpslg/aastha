@@ -35,7 +35,7 @@ class EducationBoard extends Model
     protected function name(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 }

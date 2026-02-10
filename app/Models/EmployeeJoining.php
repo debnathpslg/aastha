@@ -84,7 +84,7 @@ class EmployeeJoining extends Model
     protected function fullName(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
@@ -98,56 +98,56 @@ class EmployeeJoining extends Model
     protected function gender(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function nationality(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function maritalStatus(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function fatherName(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function localGuardianName(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function joiningStatus(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function remarks(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucfirst($value) : null
+            set: fn ($value) => $value ? ucfirst(strtolower($value)) : null
         );
     }
 
     protected function signedPlace(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 }

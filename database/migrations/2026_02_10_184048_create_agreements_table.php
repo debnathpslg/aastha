@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('relations', function (Blueprint $table) {
+        Schema::create('agreements', function (Blueprint $table) {
             $table->uuid('id')->primary();
-
-            $table->string('name', 50)->unique()->index()
-                ->comment('Father, Mother, Spouse, Guardian, Friend etc.');
-
-            $table->boolean('is_valid_beneficiary')->index()->default(false);
-            $table->boolean('is_valid_reference')->index()->default(false);
-            $table->boolean('is_system')->index()->default(false);
+            $table->uuid('company_id')->index();
 
             // Audit
             $table->uuid('created_by')->index();
@@ -27,6 +21,9 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('company_id')
+                ->references('id')->on('companies');
 
             $table->foreign('created_by')
                 ->references('employee_id')->on('users');
@@ -41,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('relations');
+        Schema::dropIfExists('agreements');
     }
 };

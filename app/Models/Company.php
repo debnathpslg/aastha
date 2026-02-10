@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class EducationStandard extends Model
+class Company extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
@@ -20,16 +20,11 @@ class EducationStandard extends Model
     protected $fillable = [
         'id',
         'name',
+        'slug',
         'is_system',
         'created_by',
         'updated_by',
     ];
-
-    /* ================= Relationships ================= */
-    public function educationalQualifications(): HasMany // checked from my end
-    {
-        return $this->hasMany(EducationalQualification::class, 'education_standard_id');
-    }
 
     /* ================= Attributes ================= */
     protected function name(): Attribute // checked from my end
@@ -37,5 +32,19 @@ class EducationStandard extends Model
         return Attribute::make(
             set: fn($value) => $value ? ucwords(strtolower($value)) : null
         );
+    }
+
+    protected function slug(): Attribute // checked from my end
+    {
+        return Attribute::make(
+            set: fn($value) => $value ? strtoupper($value) : null
+        );
+    }
+
+    /* ================= Relations ================= */
+
+    public function agreements(): HasMany // checked from my end
+    {
+        return $this->hasMany(Agreement::class, 'company_id');
     }
 }

@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             EducationStandardSeeder::class,
             EducationBoardSeeder::class,
             SupportDocTypeSeeder::class,
+            CompanySeeder::class,
+            PropDocTypeSeeder::class,
         ]);
     }
 }

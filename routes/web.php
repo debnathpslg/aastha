@@ -6,6 +6,7 @@ use App\Http\Controllers\EducationBoardController;
 use App\Http\Controllers\EducationStandardController;
 use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\RelationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,11 @@ Route::middleware('auth')->group(
         Route::post('standards/{standard}/restore', [EducationStandardController::class, 'restore'])
             ->name('standards.restore');
         Route::resource('standards', EducationStandardController::class);
+
+        // Relation CRUD
+        Route::post('relations/{relation}/restore', [RelationController::class, 'restore'])
+            ->name('relations.restore');
+        Route::resource('relations', RelationController::class);
 
         // Users Route
         Route::resource('users', UserController::class)

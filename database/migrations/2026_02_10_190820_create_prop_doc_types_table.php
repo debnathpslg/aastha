@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('relations', function (Blueprint $table) {
+        Schema::create('prop_doc_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
-
-            $table->string('name', 50)->unique()->index()
-                ->comment('Father, Mother, Spouse, Guardian, Friend etc.');
-
-            $table->boolean('is_valid_beneficiary')->index()->default(false);
-            $table->boolean('is_valid_reference')->index()->default(false);
+            $table->string('name', 100)->unique()->index();
             $table->boolean('is_system')->index()->default(false);
 
             // Audit
@@ -41,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('relations');
+        Schema::dropIfExists('prop_doc_types');
     }
 };

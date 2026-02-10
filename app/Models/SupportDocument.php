@@ -43,7 +43,7 @@ class SupportDocument extends Model
     protected function remarks(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucfirst($value) : null
+            set: fn ($value) => $value ? ucfirst(strtolower($value)) : null
         );
     }
 }

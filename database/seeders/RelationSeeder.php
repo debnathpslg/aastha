@@ -35,6 +35,7 @@ class RelationSeeder extends Seeder
                     'is_valid_beneficiary' => $is_valid_beneficiary,
                     'is_valid_reference' => $is_valid_reference,
                     'created_by' => $suEmployeeId,
+                    'is_system' => true,
                 ],
             );
         }

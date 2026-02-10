@@ -37,49 +37,49 @@ class EmployeeAddress extends Model
     protected function addressType(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function street(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function locality(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function city(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function district(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function postOffice(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function poststateOffice(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 }

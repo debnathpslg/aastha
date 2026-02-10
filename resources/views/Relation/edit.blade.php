@@ -5,14 +5,17 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header bg-info">
-                <h4 class="m-b-0 text-white">Education Board Creation Form</h4>
+                <h4 class="m-b-0 text-white">Relation Alteration Form</h4>
             </div>
 
-            <form method="POST" action="{{ route('boards.store') }}" class="row g-3 m-2" novalidate>
+            <form method="POST" 
+                action="{{ route('relations.update', $relation) }}" 
+                class="row g-3 m-2" novalidate>
                 @csrf
+                @method('PUT')
 
                 <div class="card-body col-md-12">
-                    <h4 class="card-title">Education Board Info</h4>
+                    <h4 class="card-title">Relation Info</h4>
                     {{-- @if($errors->any())
                         <ul>
                             @foreach($errors->all() as $error)
@@ -28,11 +31,30 @@
                     <div class="card-body">
                         <div class="row p-t-20">
                             <x-form.text-input 
-                                colSpan='col-md-12'
+                                colSpan='col-md-6'
                                 type="text"
                                 name="name"
                                 labelCaption="Edu. Board"
                                 extraClass="text-capitalize"
+                                :receivedData="$relation->name"
+                                required
+                            />
+
+                            <x-form.select-input 
+                                colSpan='col-md-3'
+                                labelCaption="Is Applicable for Beneficiary"
+                                name="is_valid_beneficiary"
+                                :options="[0 => 'No', 1 => 'Yes']"
+                                :selectedData="$relation->is_valid_beneficiary"
+                                required
+                            />
+
+                            <x-form.select-input 
+                                colSpan='col-md-3'
+                                labelCaption="Is Applicable for Reference"
+                                name="is_valid_reference"
+                                :options="[0 => 'No', 1 => 'Yes']"
+                                :selectedData="$relation->is_valid_reference"
                                 required
                             />
                         </div>
@@ -45,7 +67,7 @@
                                     class="btn btn-info waves-effect waves-light">Save</button>
                                 <a type="submit" 
                                     class="btn btn-dark waves-effect waves-light"
-                                    href="{{ route('boards.index') }}">Cancel</a>
+                                    href="{{ route('relations.index') }}">Cancel</a>
                             </div>
                         </div>
                     </div>

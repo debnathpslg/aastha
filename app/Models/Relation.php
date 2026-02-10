@@ -22,6 +22,7 @@ class Relation extends Model
         'name',
         'is_valid_beneficiary',
         'is_valid_reference',
+        'is_system',
         'created_by',
         'updated_by',
     ];
@@ -30,7 +31,7 @@ class Relation extends Model
     protected function name(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 

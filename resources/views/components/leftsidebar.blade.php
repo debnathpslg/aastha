@@ -100,6 +100,66 @@
                     >
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="{{ route('relations.index') }}"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Relation</span
+                    >
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Company</span
+                    >
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Agreement</span
+                    >
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Prop. Doc. Type</span
+                    >
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Prop. Documents</span
+                    >
+                </a>
+            </li>
             {{-- temporary links - end --}}
 
             <li class="sidebar-item">

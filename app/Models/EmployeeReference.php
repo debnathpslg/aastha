@@ -39,14 +39,14 @@ class EmployeeReference extends Model
     protected function referenceName(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
     protected function address(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucfirst($value) : null
+            set: fn ($value) => $value ? ucfirst(strtolower($value)) : null
         );
     }
 }

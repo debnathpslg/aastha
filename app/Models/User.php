@@ -45,10 +45,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    // ========== Relation ==========
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn ($value) => $value ? ucwords(strtolower($value)) : null
         );
     }
 
