@@ -367,9 +367,18 @@ class EmployeeJoiningController extends Controller
             'supportDocuments.documentUpload'
         ]);
 
+        $qrPayload = json_encode([
+            'employee_joining_id' => $employeeJoining->id,
+            'signed_date' => $employeeJoining->signed_date,
+            'checksum' => hash(
+                'sha256',
+                $employeeJoining->id . '|' . $employeeJoining->signed_date
+            ),
+        ]);
+
         $pdf = Pdf::loadView(
             'EmployeeJoining.pdf',
-            compact('employeeJoining')
+            compact('employeeJoining', 'qrPayload')
         )->setPaper('A4');
 
         return $pdf->download(

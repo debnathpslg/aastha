@@ -29,7 +29,10 @@ class EducationStandardSeeder extends Seeder
         foreach ($standards as $name) {
             EducationStandard::updateOrCreate(
                 ['name' => $name],
-                ['created_by' => $suEmployeeId],
+                [
+                    'created_by' => $suEmployeeId,
+                    'is_system' => true,
+                ],
             );
         }
     }

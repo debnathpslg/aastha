@@ -16,6 +16,7 @@ class Language extends Model
     protected $fillable = [
         'id',
         'name',
+        'is_system',
         'created_by',
         'updated_by',
     ];

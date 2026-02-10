@@ -30,7 +30,7 @@
                 <div id="loginform">
                     <div class="logo">
                         {{-- <span class="db"><img src="{{ asset('storage/assets/images/logo-icon.png') }}" alt="logo" /></span> --}}
-                        <h5 class="font-medium m-b-20">Sign In to IMS</h5>
+                        <h5 class="font-medium m-b-20">Sign In to Aastha</h5>
                     </div>
                     <div class="row">
                         <div class="col-12">

@@ -3,26 +3,43 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeJoiningController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(
     function () {
+        // Login Routes
         Route::get('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/login', [AuthController::class, 'validateLogin'])->name('validateLogin');
         // Route::get("/register", [AuthController::class, 'register'])->name('register');
         // Route::post("/register", [AuthController::class, 'validateRegister'])->name('validateRegister');
+
+        // Logout URI sanitisation
         Route::get('/logout', [AuthController::class, 'logout']);
     }
 );
 
 Route::middleware('auth')->group(
     function () {
+        // Logout Routes
         Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        // Login Home Page
         Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+        // Master Routes
+        // Roles CRUD
         Route::resource('roles', RoleController::class)->only(['index', 'show'])
             ->middleware('can:viewAny, App\Models\Role');
+
+        // Languages CRUD
+        Route::post('languages/{language}/restore', [LanguageController::class, 'restore'])
+            ->name('languages.restore');
+        Route::resource('languages', LanguageController::class);
+
+        // Users Route
         Route::resource('users', UserController::class)
             ->middleware('can:viewAny, App\Models\User');
         Route::post(
@@ -30,6 +47,7 @@ Route::middleware('auth')->group(
             [UserController::class, 'resetPassword']
         )->name('users.reset-password');
 
+        // Onboarding Component Routes
         Route::get('/onboardings', [EmployeeJoiningController::class, 'index'])->name('onboardings.index');
         Route::get('/onboardings/create', [EmployeeJoiningController::class, 'create'])->name('onboardings.create');
         Route::post('/onboardings/store', [EmployeeJoiningController::class, 'store'])->name('onboardings.store');

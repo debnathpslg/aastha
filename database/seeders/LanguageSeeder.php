@@ -18,8 +18,6 @@ class LanguageSeeder extends Seeder
             'Hindi',
             'English',
             'Assamese',
-            'Odia',
-            'Nepali',
         ];
 
         $suEmployeeId = User::whereHas('role', function ($q) {
@@ -29,7 +27,10 @@ class LanguageSeeder extends Seeder
         foreach ($languages as $name) {
             Language::updateOrCreate(
                 ['name' => $name],
-                ['created_by' => $suEmployeeId],
+                [
+                    'created_by' => $suEmployeeId,
+                    'is_system' => true,
+                ],
             );
         }
     }

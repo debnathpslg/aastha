@@ -45,8 +45,7 @@ class RoleController extends Controller
             'level',
             'permission',
             'is_system',
-        )
-            ->get();
+        )->get();
 
         return view('Role.index', compact('breadCrumbProps', 'roles'));
     }

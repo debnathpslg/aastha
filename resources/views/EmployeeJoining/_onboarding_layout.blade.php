@@ -157,30 +157,34 @@
             </tbody>
         </table>
 
-        <h4 class="section-title">Languages Known</h4>
+        <br />
 
-        <table class="info-table text-center">
-
-            @foreach($employeeJoining->languageKnows as $lang)
-                <tr>
-                    <td>{{ $lang->language->name }}</td>
-                    <td>{{ $lang->can_understand ? 'Yes' : 'No' }}</td>
-                    <td>{{ $lang->can_speak ? 'Yes' : 'No' }}</td>
-                    <td>{{ $lang->can_read ? 'Yes' : 'No' }}</td>
-                    <td>{{ $lang->can_write ? 'Yes' : 'No' }}</td>
+        <table style="width: 100%;  border: 1px solid black;">
+            <thead>
+                <tr class="sect-title">
+                    <td colspan="5">
+                        <h4>Educational Qualification</h4>
+                    </td>
                 </tr>
-            @endforeach
-        </table>
+            </thead>
 
-        <h4 class="section-title">Educational Qualification</h4>
+            <tbody>
+                <tr>
+                    <th style="width: 25%; border-bottom: 1px solid black; margin: 0;">Std.</th>
+                    <th style="width: 25%; border-bottom: 1px solid black; margin: 0;">Board</th>
+                    <th style="width: 25%; border-bottom: 1px solid black; margin: 0;">Passing Year</th>
+                    <th style="width: 25%; border-bottom: 1px solid black; margin: 0;">Remarks</th>
+                </tr>
 
-        <table class="info-table">
-            @foreach($employeeJoining->educationalQualifications as $edu)
-                <tr><td>Standard</td><td>{{ $edu->educationStandard->name }}</td></tr>
-                <tr><td>Board</td><td>{{ $edu->educationBoard->name }}</td></tr>
-                <tr><td>Year</td><td>{{ $edu->year_of_passing }}</td></tr>
-                <tr><td>Remarks</td><td>{{ $edu->remarks }}</td></tr>
-            @endforeach
+                @foreach($employeeJoining->educationalQualifications as $edu)
+                    <tr>
+                        <td style="text-align: center;">{{ strtoupper($edu->educationStandard->name) }}</td>
+                        <td style="text-align: center;">{{ strtoupper($edu->educationBoard->name) }}</td>
+                        <td style="text-align: center;">{{ $edu->year_of_passing }}</td>
+                        <td style="text-align: center;">{{ strtoupper($edu->remarks) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
 
         @if($employeeJoining->workExperiences->count())
@@ -223,7 +227,7 @@
             <tr>
                 <td>
                     Signed at {{ $employeeJoining->signed_place }}<br />
-                    on {{ $employeeJoining->signed_date->format('d m Y') }}<br />
+                    on {{ $employeeJoining->signed_date->format('d-m-Y') }}<br />
                 </td>
                 <td align="right">
                     <div class="signature-section">
@@ -243,15 +247,3 @@
         </table>
     </div>
 </div>
-{{-- <div class="header">
-    <div class="logo">Aastha</div>
-
-    <div class="photo-box">
-        @if($photo = $employeeJoining->supportDocuments->first()?->documentUpload)
-            <img src="{{ $isPdf
-                ? public_path('storage/'.$photo->file_path)
-                : asset('storage/'.$photo->file_path)
-            }}">
-        @endif
-    </div>  
-</div> --}}

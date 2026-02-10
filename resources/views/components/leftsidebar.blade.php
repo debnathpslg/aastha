@@ -63,6 +63,20 @@
                 </ul>
             </li>
             @endsuOrAdmin
+
+            {{-- temporary links --}}
+            <li class="sidebar-item">
+                <a
+                    href="{{ route('languages.index') }}"
+                    class="sidebar-link"
+                >
+                    <i class="mdi mdi-account-box"></i>
+                    <span class="hide-menu"
+                        >Languages</span
+                    >
+                </a>
+            </li>
+
             <li class="sidebar-item">
                 <a
                     class="sidebar-link has-arrow waves-effect waves-dark"

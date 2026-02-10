@@ -28,7 +28,10 @@ class EducationBoardSeeder extends Seeder
         foreach ($boards as $name) {
             EducationBoard::updateOrCreate(
                 ['name' => $name],
-                ['created_by' => $suEmployeeId],
+                [
+                    'created_by' => $suEmployeeId,
+                    'is_system' => true,
+                ],
             );
         }
     }

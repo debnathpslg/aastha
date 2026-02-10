@@ -20,6 +20,7 @@ class EducationStandard extends Model
     protected $fillable = [
         'id',
         'name',
+        'is_system',
         'created_by',
         'updated_by',
     ];
@@ -34,7 +35,7 @@ class EducationStandard extends Model
     protected function name(): Attribute // checked from my end
     {
         return Attribute::make(
-            set: fn ($value) => $value ? ucwords($value) : null
+            set: fn($value) => $value ? ucwords($value) : null
         );
     }
 }

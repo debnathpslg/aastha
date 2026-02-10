@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name', 50)->unique()->index()
                 ->comment('Bengali, Hindi, English, Assamese etc.');
 
+            $table->boolean('is_system')->index()->default(false);
+
             // Audit
             $table->uuid('created_by')->index();
             $table->uuid('updated_by')->nullable()->index();

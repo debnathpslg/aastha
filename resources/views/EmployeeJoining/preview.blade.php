@@ -150,12 +150,12 @@
 </head>
 <body>
     {{-- PRINT BUTTON --}}
-    <div class="text-end mb-3">
+    {{-- <div class="text-end mb-3">
         <a href="{{ route('onboardings.pdf', $employeeJoining) }}"
            class="btn btn-danger">
             Download PDF
         </a>
-    </div>
+    </div> --}}
     
     <div class="container">
         @include('EmployeeJoining._onboarding_layout', [
