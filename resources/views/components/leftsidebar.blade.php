@@ -139,7 +139,7 @@
 
             <li class="sidebar-item">
                 <a
-                    href="#"
+                    href="{{ route('pdoctypes.index') }}"
                     class="sidebar-link"
                 >
                     <i class="mdi mdi-account-box"></i>

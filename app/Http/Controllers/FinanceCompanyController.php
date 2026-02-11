@@ -216,7 +216,7 @@ class FinanceCompanyController extends Controller
         if ($company->is_system)
             return redirect()
                 ->route('companies.index')
-                ->with("error", "System boards cannot be deleted...");
+                ->with("error", "Finance Company cannot be deleted...");
         else {
             $company->delete();
 

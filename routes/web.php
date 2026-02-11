@@ -11,6 +11,7 @@ use App\Http\Controllers\EducationBoardController;
 use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\EducationStandardController;
 use App\Http\Controllers\FinanceCompanyController;
+use App\Http\Controllers\PropDocTypeController;
 
 Route::middleware('guest')->group(
     function () {
@@ -58,10 +59,15 @@ Route::middleware('auth')->group(
             ->name('relations.restore');
         Route::resource('relations', RelationController::class);
 
-        // Company CRUD
+        // Finance Company CRUD
         Route::post('companies/{company}/restore', [FinanceCompanyController::class, 'restore'])
             ->name('companies.restore');
         Route::resource('companies', FinanceCompanyController::class);
+
+        // Proprietor Document Type CRUD
+        Route::post('pdoctypes/{pdoctype}/restore', [PropDocTypeController::class, 'restore'])
+            ->name('pdoctypes.restore');
+        Route::resource('pdoctypes', PropDocTypeController::class);
 
         // Users Route
         Route::resource('users', UserController::class)
