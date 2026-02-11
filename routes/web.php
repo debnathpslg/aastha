@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\RelationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EducationBoardController;
-use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\EducationStandardController;
+use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\FinanceCompanyController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PropDocTypeController;
+use App\Http\Controllers\RelationController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(
     function () {
@@ -85,5 +86,14 @@ Route::middleware('auth')->group(
             ->name('onboardings.preview');
         Route::get('/onboardings/{employeeJoining}/pdf', [EmployeeJoiningController::class, 'pdf'])
             ->name('onboardings.pdf');
+
+        // Agreement Route
+        Route::get('agreements/{agreement}/create_from_edit', [AgreementController::class, 'createFromEdit'])
+            ->name('agreements.createFromEdit');
+        Route::post('agreements/{agreement}/store_from_edit', [AgreementController::class, 'storeFromEdit'])
+            ->name('agreements.storeFromEdit');
+        Route::delete('agreements/destroy_from_edit/{doc}/{agreement}', [AgreementController::class, 'destroyFromEdit'])
+            ->name('agreements.destroyFromEdit');
+        Route::resource('agreements', AgreementController::class);
     }
 );

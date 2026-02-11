@@ -127,7 +127,7 @@
 
             <li class="sidebar-item">
                 <a
-                    href="#"
+                    href="{{ route('agreements.index') }}"
                     class="sidebar-link"
                 >
                     <i class="mdi mdi-account-box"></i>

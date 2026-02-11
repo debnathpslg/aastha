@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             // FK
-            $table->uuid('upload_agreement_id')->unique();
+            $table->uuid('agreement_id')->index();
 
             // File meta
             $table->string('file_path', 255);
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->softDeletes();
 
             // Constraints
-            $table->foreign('upload_agreement_id')
+            $table->foreign('agreement_id')
                 ->references('id')->on('agreements');
 
             $table->foreign('uploaded_by')
