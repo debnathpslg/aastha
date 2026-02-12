@@ -34,7 +34,7 @@
                                 {{ $agreement->company->slug }}
                             </td>
 
-                            @if ($agreement->uploadedAgreements->count() > 0)
+                            @if ($agreement->uploadedAgreements->isNotEmpty())
                                 <th class="bg-secondary text-white">Uploaded Agreements</th>
                                 <th class="bg-secondary text-white">Upload Date</th>
                                 <th class="bg-secondary text-white">Action</th>
@@ -45,7 +45,7 @@
 
                         {{-- @dd($agreement) --}}
 
-                        @if ($agreement->uploadedAgreements->count() > 0)
+                        @if ($agreement->uploadedAgreements->isNotEmpty())
                             @foreach ($agreement->uploadedAgreements as $upload)
                                 <tr>
                                     <td>{{ $upload->file_name }}</td>

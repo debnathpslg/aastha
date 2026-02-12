@@ -94,6 +94,6 @@ Route::middleware('auth')->group(
             ->name('agreements.storeFromEdit');
         Route::delete('agreements/destroy_from_edit/{doc}/{agreement}', [AgreementController::class, 'destroyFromEdit'])
             ->name('agreements.destroyFromEdit');
-        Route::resource('agreements', AgreementController::class);
+        Route::resource('agreements', AgreementController::class)->except(['update', 'show']);
     }
 );

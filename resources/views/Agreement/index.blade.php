@@ -3,7 +3,7 @@
 @section('content')
 <div>
     <div class="table-responsive">
-        <table id="zero_config" class="table table-striped table-bordered table-sm table-hover">
+        <table id="zero_config" class="table table-bordered table-sm table-hover">
             <thead class="bg-primary text-white">
                 <tr>
                     <th>Company Name</th>
@@ -18,9 +18,7 @@
                 @foreach ($agreements as $agreement)
                     <tr>
                         <td>
-                            <a href="#">
-                                {{ $agreement->company->name }}
-                            </a>
+                            {{ $agreement->company->name }}
                         </td>
 
                         <td>
@@ -31,7 +29,12 @@
                             @if ($agreement->uploaded_agreements_count > 0)
                                 <ul>
                                     @foreach ($agreement->uploadedAgreements as $uploads)
-                                        <li>{{ $uploads->file_name }}</li>
+                                        <li>
+                                            <a href="{{ asset('storage/'.$uploads->file_path) }}"
+                                                target="_blank">
+                                                {{ $uploads->file_name }}
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             @else
@@ -45,6 +48,20 @@
 
                         <td class="text-center">
                             <a href="{{ route('agreements.edit', $agreement) }}" class="btn btn-outline-secondary">Edit</a>
+                            @if ($agreement->uploadedAgreements->isEmpty())
+                                <form action="{{ route('agreements.destroy', ['agreement' => $agreement]) }}" 
+                                    method="POST" 
+                                    style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" 
+                                        onclick="return confirm('Are you sure?')"
+                                        class="btn btn-outline-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -54,7 +71,7 @@
                 <tr>
                     <td colspan="7">
                         <a type="button" class="btn btn-info btn-rounded" 
-                            href="#">New Company</a>
+                            href="{{ route('agreements.create') }}">New Company</a>
                     </td>
                 </tr>
             </tfoot>

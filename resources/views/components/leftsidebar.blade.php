@@ -209,6 +209,18 @@
                             </li>
                         </ul>
                     </li>
+
+                    {{-- Logout --}}
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-link btn-secondary w-100 text-white">
+                                <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </li>
         </ul>

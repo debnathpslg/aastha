@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Agreement;
-use Illuminate\Http\Request;
+use App\Models\FinanceCompany;
 use App\Models\UploadedAgreement;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AgreementController extends Controller
@@ -48,18 +51,79 @@ class AgreementController extends Controller
      */
     public function create()
     {
-        //
+        $breadCrumbProps = [
+            'page_name' => 'Agreements',
+            'bread_crumbs' => [
+                [
+                    'label' => 'Home',
+                    'url' => route('home'),
+                ],
+                [
+                    'label' => 'Audit',
+                    // 'url' => route('home'),
+                ],
+                [
+                    'label' => 'Agreement',
+                    'url' => route('agreements.index'),
+                ],
+                [
+                    'label' => 'Create',
+                ],
+            ],
+        ];
+
+        $companies = FinanceCompany::orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray();
+
+        return view('Agreement.create', compact('breadCrumbProps', 'companies'));
     }
-
-
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+
+        $request->validate([
+            'company_id'         => 'required|exists:finance_companies,id|unique:agreements,company_id',
+            'uploaded_agreement' => 'required|file|mimes:pdf,doc,docx,jpg,png,gif|max:10240',
+        ]);
+
+        $storedPath = null;
+
+        try {
+            DB::transaction(
+                function () use ($request, $storedPath) {
+                    $userEmployeeId = Auth::user()->employee_id;
+
+                    $agreement = Agreement::create([
+                        'company_id' => $request->company_id,
+                        'created_by' => $userEmployeeId,
+                    ]);
+
+                    $doc = $request->file('uploaded_agreement');
+                    $folder = "uploaded_agreements/{$agreement->id}";
+                    $storedPath = $doc->store($folder, 'public');
+
+                    UploadedAgreement::create([
+                        'agreement_id' => $agreement->id,
+                        'file_path' => $storedPath,
+                        'file_name' => $doc->getClientOriginalName(),
+                        'mime_type' => $doc->getClientMimeType(),
+                        'file_size' => $doc->getSize(),
+                        'uploaded_by' => $userEmployeeId,
+                    ]);
+                }
+            );
+        } catch (\Exception $e) {
+            Storage::disk('public')->delete($storedPath);
+            throw $e;
+        }
+
+        return redirect()->route('agreements.index')
+            ->with('success', 'Agreement uploaded successfully.');
     }
 
     /**
@@ -124,7 +188,7 @@ class AgreementController extends Controller
                 ],
                 [
                     'label' => 'Agreement',
-                    'url' => route('home'),
+                    'url' => route('agreements.edit'),
                 ],
                 [
                     'label' => 'Add Uploads',
@@ -149,19 +213,34 @@ class AgreementController extends Controller
             'document.file' => 'required|file|mimes:pdf,doc,docx,jpg,png,gif|max:10240',
         ]);
 
-        $userEmployeeId = Auth::user()->employee_id;
-        $doc = $request->document;
-        $folder = "uploaded_agreements/{$agreement->id}";
-        $storedPath = $doc['file']->store($folder, 'public');
+        $agreement->load('uploadedAgreements');
+        $storedPath = null;
 
-        UploadedAgreement::create([
-            'agreement_id' => $agreement->id,
-            'file_path' => $storedPath,
-            'file_name' => $doc['file']->getClientOriginalName(),
-            'mime_type' => $doc['file']->getClientMimeType(),
-            'file_size' => $doc['file']->getSize(),
-            'uploaded_by' => $userEmployeeId,
-        ]);
+        try {
+            DB::transaction(
+                function () use ($request, $agreement, $storedPath) {
+                    $userEmployeeId = Auth::user()->employee_id;
+                    $doc = $request->file('document.file');
+                    $folder = "uploaded_agreements/{$agreement->id}";
+                    $storedPath = $doc->store($folder, 'public');
+
+                    UploadedAgreement::create([
+                        'agreement_id' => $agreement->id,
+                        'file_path' => $storedPath,
+                        'file_name' => $doc->getClientOriginalName(),
+                        'mime_type' => $doc->getClientMimeType(),
+                        'file_size' => $doc->getSize(),
+                        'uploaded_by' => $userEmployeeId,
+                    ]);
+
+                    $agreement->updated_by = $userEmployeeId;
+                    $agreement->save();
+                }
+            );
+        } catch (\Exception $e) {
+            Storage::disk('public')->delete($storedPath);
+            throw $e;
+        }
 
         return redirect()->route('agreements.edit', $agreement)
             ->with('success', 'Agreement uploaded successfully.');
@@ -169,6 +248,11 @@ class AgreementController extends Controller
 
     public function destroyFromEdit(Request $request, UploadedAgreement $doc, Agreement $agreement)
     {
+        if ($doc->agreement_id !== $agreement->id) {
+            return redirect()->route('agreements.edit', $agreement)
+                ->with('error', 'Unauthorised/fictitious activity detected. Hence action aborted.');
+        }
+
         // ===== 1) Physical file delete =====
         if ($doc->file_path && Storage::disk('public')->exists($doc->file_path)) {
             Storage::disk('public')->delete($doc->file_path);
@@ -183,8 +267,24 @@ class AgreementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Agreement $agreements)
+    public function destroy(Agreement $agreement)
     {
-        //
+        $agreement->load('uploadedAgreements');
+
+        if ($agreement->uploadedAgreements->isNotEmpty()) {
+            return redirect()->route('agreements.index')
+                ->with('error', 'Action aborted. Please delete all files first.');
+        }
+
+        $folder = "uploaded_agreements/{$agreement->id}";
+
+        if (Storage::disk('public')->exists($folder)) {
+            Storage::disk('public')->deleteDirectory($folder);
+        }
+
+        $agreement->forceDelete();
+
+        return redirect()->route('agreements.index')
+            ->with('success', 'Company agreement uploaded history deleted successfully.');
     }
 }

@@ -189,7 +189,7 @@ class LanguageController extends Controller
             ],
         ]);
 
-        $validated['updated_by'] = $currentUser->employee->id;
+        $validated['updated_by'] = $currentUser->employee_id;
         $language->update($validated);
 
         return redirect()
