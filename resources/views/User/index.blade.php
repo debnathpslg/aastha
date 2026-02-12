@@ -7,7 +7,7 @@
     <div>
         <div class="table-responsive">
             {{-- @dd($users) --}}
-            <table id="zero_config" class="table table-striped table-bordered table-sm table-hover">
+            <table id="zero_config" class="table table-bordered table-sm table-hover">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>User Name</th>
