@@ -9,6 +9,7 @@ use App\Http\Controllers\EmployeeJoiningController;
 use App\Http\Controllers\FinanceCompanyController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PropDocTypeController;
+use App\Http\Controllers\PropDocumentController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -95,5 +96,8 @@ Route::middleware('auth')->group(
         Route::delete('agreements/destroy_from_edit/{doc}/{agreement}', [AgreementController::class, 'destroyFromEdit'])
             ->name('agreements.destroyFromEdit');
         Route::resource('agreements', AgreementController::class)->except(['update', 'show']);
+
+        // Proprietor Document Route
+        Route::resource('prop_uploads', PropDocumentController::class)->except(['update', 'show']);
     }
 );

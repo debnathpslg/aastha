@@ -126,15 +126,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a
-                    href="{{ route('agreements.index') }}"
-                    class="sidebar-link"
-                >
-                    <i class="mdi mdi-account-box"></i>
-                    <span class="hide-menu"
-                        >Agreement</span
-                    >
-                </a>
+                
             </li>
 
             <li class="sidebar-item">
@@ -150,17 +142,47 @@
             </li>
 
             <li class="sidebar-item">
-                <a
-                    href="#"
-                    class="sidebar-link"
-                >
-                    <i class="mdi mdi-account-box"></i>
-                    <span class="hide-menu"
-                        >Prop. Documents</span
-                    >
-                </a>
+                
             </li>
             {{-- temporary links - end --}}
+
+            <li class="sidebar-item">
+                <a
+                    class="sidebar-link has-arrow waves-effect waves-dark"
+                    href="javascript:void(0)"
+                    aria-expanded="false"
+                >
+                    <i class="mdi mdi-sitemap"></i>
+                    <span class="hide-menu">Audit</span>
+                </a>
+                <ul
+                    aria-expanded="false"
+                    class="collapse second-level"
+                >
+                    <li class="sidebar-item">
+                        <a
+                            href="{{ route('agreements.index') }}"
+                            class="sidebar-link"
+                        >
+                            <i class="mdi mdi-account-box"></i>
+                            <span class="hide-menu"
+                                >Agreement</span
+                            >
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a
+                            href="{{ route('prop_uploads.index') }}"
+                            class="sidebar-link"
+                        >
+                            <i class="mdi mdi-account-box"></i>
+                            <span class="hide-menu"
+                                >Prop. Documents</span
+                            >
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="sidebar-item">
                 <a

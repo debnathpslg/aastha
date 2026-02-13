@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('prop_documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('Prop_doc_type_id')->index();
+            $table->uuid('prop_doc_type_id')->index();
 
             // Audit
             $table->uuid('created_by')->index();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('Prop_doc_type_id')
+            $table->foreign('prop_doc_type_id')
                 ->references('id')->on('prop_doc_types');
 
             $table->foreign('created_by')

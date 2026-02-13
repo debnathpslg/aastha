@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropDocument extends Model
@@ -15,7 +16,8 @@ class PropDocument extends Model
 
     protected $fillable = [
         'id',
-        'Prop_doc_type_id',
+        'prop_doc_type_id',
+        'has_uploaded_file',
         'created_by',
         'updated_by',
     ];
@@ -24,11 +26,11 @@ class PropDocument extends Model
 
     public function propDocType(): BelongsTo // checked from my end
     {
-        return $this->belongsTo(PropDocType::class, 'Prop_doc_type_id');
+        return $this->belongsTo(PropDocType::class, 'prop_doc_type_id');
     }
 
-    public function uploadedPropDocs(): HasMany // checked from my end
+    public function uploadedPropDoc(): HasOne // checked from my end
     {
-        return $this->hasMany(UploadedPropDoc::class, 'Prop_document_id');
+        return $this->HasOne(UploadedPropDoc::class, 'prop_document_id');
     }
 }

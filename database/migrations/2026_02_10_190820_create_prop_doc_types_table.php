@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 100)->unique()->index();
             $table->boolean('is_system')->index()->default(false);
+            // $table->boolean('has_upload_file')->index()->default(false);
 
             // Audit
             $table->uuid('created_by')->index();
